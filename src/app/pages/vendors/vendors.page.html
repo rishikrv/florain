@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>VENDORS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let shop of shops">
+      <ion-col class="ion-no-padding">
+        <ion-item class="seller_info" lines="none" (click)="openShop(shop?.slug)"  detail>
+          <ion-thumbnail slot="start"><img [src]="shop?.image"/></ion-thumbnail>
+          <ion-label>
+            <h3>{{shop?.name}}
+              <ion-icon
+                color="primary" *ngIf="shop?.verified" name="checkmark-circle">
+              </ion-icon>
+            </h3>
+            <p *ngIf="shop?.rating">
+              <ion-icon color="medium" *ngIf="shop?.rating ==0" name="star-outline"></ion-icon>
+              <ion-icon color="warning" *ngIf="shop?.rating>=1" name="star"></ion-icon>
+              <ion-icon color="warning" *ngIf="shop?.rating > 0 && shop?.rating < 1" name="star-half"></ion-icon>
+
+              <ion-icon color="medium" *ngIf="shop?.rating <=1" name="star-outline"></ion-icon>
+              <ion-icon color="warning" *ngIf="shop?.rating>=2" name="star"></ion-icon>
+              <ion-icon color="warning" *ngIf="shop?.rating > 1 && shop?.rating <2" name="star-half"></ion-icon>
+
+              <ion-icon color="medium" *ngIf="shop?.rating <=2"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating>=3"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 2 && shop?.rating <3"
+                name="star-half"
+              >
+              </ion-icon>
+
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating <=3"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating>=4"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 3 && shop?.rating <4"
+                name="star-half"
+              >
+              </ion-icon>
+
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating <=4"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating==5"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 4 && shop?.rating <5"
+                name="star-half"
+              >
+              </ion-icon>
+              ({{shop?.rating}})
+            </p>
+          </ion-label>
+          <!-- <ion-button
+            slot="end"
+            size="small"
+            color="primary"
+            (click)="openShop(shop?.slug)"
+            shape="round"
+            mode="ios"
+            translate
+          >
+            VISIT_STORE
+          </ion-button> -->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Product Seller End -->
+</ion-content>

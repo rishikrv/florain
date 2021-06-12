@@ -1,0 +1,45 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>CONVERSATIONS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">
+    <div *ngFor="let message of messages">
+      <ion-item
+        *ngIf="message.user"
+        (click)="openConversations(message.shop_id)"
+      >
+        <ion-avatar slot="start">
+          <img [src]="message.user.avatar" />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{message.user.name}}</h2>
+          <p>{{message.message}}</p>
+        </ion-label>
+        <ion-button fill="clear" color="medium" slot="end">
+          <ion-icon name="arrow-dropright" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item
+        *ngIf="message.customer"
+        (click)="openConversations(message.shop_id)"
+      >
+        <ion-avatar slot="start">
+          <img [src]="message.customer.avatar" />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{message.customer.name}}</h2>
+          <p>{{message.message}}</p>
+        </ion-label>
+        <ion-button fill="clear" color="medium" slot="end">
+          <ion-icon name="arrow-dropright" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

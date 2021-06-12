@@ -1,0 +1,464 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>DETAILS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid *ngIf="order?.order_number">
+    <ion-row class="order-status">
+      <ion-col>
+        <h2>{{order?.order_status}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.order_number">
+      <ion-col size="4">
+        <p class="option" translate>ORDER_NUMBER</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.order_number}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.order_date">
+      <ion-col size="4">
+        <p class="option" translate>DATE</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.order_date}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.order_status">
+      <ion-col size="4">
+        <p class="option" translate>ORDER_STATUS</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.order_status}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.shipping_address">
+      <ion-col size="4">
+        <p class="option" translate>SHIPPING_ADDRESS</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.shipping_address}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.billing_address">
+      <ion-col size="4">
+        <p class="option" translate>BILLING_ADDRESS</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.billing_address}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.shipping">
+      <ion-col size="4">
+        <p class="option" translate>SHIPPING_COST</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.shipping}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.Handling">
+      <ion-col size="4">
+        <p class="option" translate>HANDLING_COST</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.Handling}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.packaging">
+      <ion-col size="4">
+        <p class="option" translate>PACKAGING_COST</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.packaging}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.discount">
+      <ion-col size="4">
+        <p class="option" translate>DISCOUNT</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.discount}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.shipping_weight">
+      <ion-col size="4">
+        <p class="option" translate>SHIPPING_WEIGHT</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.shipping_weight}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.shipping_date">
+      <ion-col size="4">
+        <p class="option" translate>SHIPPING_DATE</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.shipping_date}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.tracking_id">
+      <ion-col size="4">
+        <p class="option" translate>TRACKING_ID</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.tracking_id}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.buyer_note">
+      <ion-col size="4">
+        <p class="option" translate>BUYER_NOTE</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.buyer_note}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Cart Item Start -->
+  <div class="order" *ngIf="order?.shop">
+    <ion-item
+      class="seller_info"
+      lines="none"
+      (click)="openShop(order?.shop?.slug)"
+    >
+      <ion-thumbnail slot="start"
+        ><img [src]="order?.shop?.image"
+      /></ion-thumbnail>
+      <ion-label>
+        <h2>
+          {{order?.shop?.name}}
+          <ion-icon
+            *ngIf="order?.shop?.verified"
+            name="checkmark-circle"
+          ></ion-icon>
+        </h2>
+
+        <p *ngIf="order?.shop?.rating">
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating ==0"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=1"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 0 && order?.shop?.rating <1"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=1"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=2"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 1 && order?.shop?.rating <2"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=2"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=3"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 2 && order?.shop?.rating <3"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=3"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=4"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 3 && order?.shop?.rating <4"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=4"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating==5"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 4 && order?.shop?.rating <5"
+            name="star-half"
+          >
+          </ion-icon>
+          ({{order?.shop?.rating}})
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <!-- cart item start -->
+    <ion-item
+      *ngFor="let item of order?.items"
+      (click)="openProduct(item.slug)"
+      lines="none"
+    >
+      <ion-thumbnail class="small-thumb" slot="start">
+        <img [src]="item.image" />
+      </ion-thumbnail>
+      <ion-label>
+        <p class="ion-text-wrap">{{item.description}}</p>
+        <h2 class="price">
+          <b>{{item.unit_price}}</b>
+          <ion-text color="medium"> x {{item.quantity}}</ion-text>
+        </h2>
+
+        <p *ngIf="item.feedback" class="ion-text-center ion-padding">
+          <ion-text color="medium" translate>SUBMITTED_FEEDBACK</ion-text>
+        </p>
+
+        <p *ngIf="item.feedback">
+          <ion-icon
+            color="medium"
+            *ngIf="item.feedback.rating ==0"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating>=1"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating > 0 && item.feedback.rating <1"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="item.feedback.rating <=1"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating>=2"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating > 1 && item.feedback.rating <2"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="item.feedback.rating <=2"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating>=3"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating > 2 && item.feedback.rating <3"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="item.feedback.rating <=3"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating>=4"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating > 3 && item.feedback.rating <4"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="item.feedback.rating <=4"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating==5"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="item.feedback.rating > 4 && item.feedback.rating <5"
+            name="star-half"
+          >
+          </ion-icon>
+          ({{item.feedback.rating}})
+        </p>
+        <p *ngIf="item.feedback">
+          <ion-text color="medium">{{item.feedback.updated_at}}</ion-text>
+        </p>
+
+        <p *ngIf="item.feedback" class="ion-text-wrap">
+          {{item.feedback.comment}}
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <!-- cart item end -->
+  </div>
+
+  <!-- Cart Item End -->
+
+  <ion-grid *ngIf="order?.order_number">
+    <ion-row>
+      <ion-col>
+        <p><b translate>PAYMENT_DETAILS</b></p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="order?.total">
+      <ion-col size="4">
+        <p class="option" translate>TOTAL</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.total}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.taxes">
+      <ion-col size="4">
+        <p class="option" translate>TAXES</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.taxes}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.shipping">
+      <ion-col size="4">
+        <p class="option" translate>SHIPPING</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.shipping}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.payment_method?.name">
+      <ion-col size="4">
+        <p class="option" translate>PAYMENT_METHOD</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.payment_method?.name}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order?.payment_status">
+      <ion-col size="4">
+        <p class="option" translate>PAYMENT_STATUS</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{order?.payment_status}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="9" class="ion-text-right price-label" translate
+        >NET_TOTAL</ion-col
+      >
+      <ion-col size="3" class="ion-text-right price"
+        >{{order?.grand_total}}</ion-col
+      >
+    </ion-row>
+
+    <ion-row class="ion-margin-right">
+      <ion-col class="ion-text-right">
+        <ion-button
+          size="small"
+          (click)="contactSeller()"
+          shape="round"
+          color="medium"
+          translate
+        >
+          CONTACT_SELLER
+        </ion-button>
+        <ion-button
+          size="small"
+          shape="round"
+          *ngIf="!order?.dispute_id"
+          (click)="openDispute(order)"
+          color="medium"
+          translate
+        >
+          OPEN_DISPUTE
+        </ion-button>
+        <!-- <ion-button size="small" shape="round" *ngIf="order?.tracking_id" (click)="openDispute(order)" color="medium">Track</ion-button> -->
+        <!-- <ion-button  size="small" shape="round" *ngIf="order?.disputed" (click)="openDispute(order)" color="danger">Dispute Details</ion-button> -->
+        <ion-button
+          size="small"
+          shape="round"
+          color="medium"
+          (click)="confirmOrder(order?.id)"
+          *ngIf="!order?.goods_received"
+          translate
+        >
+          CONFIRM_RECEIVED
+        </ion-button>
+        <ion-button
+          size="small"
+          shape="round"
+          color="medium"
+          (click)="evaluateOrder(order)"
+          *ngIf="order?.can_evaluate"
+          translate
+        >
+          EVALUATE
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

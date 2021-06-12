@@ -1,0 +1,303 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-button (click)="openSearch()">
+        <ion-icon name="search-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title translate>
+      WELCOME
+    </ion-title> -->
+
+    <ion-searchbar
+      placeholder="I'm shopping for ..."
+      style="margin-top: 16px;"
+      animated
+      mode="ios"
+      (click)="openSearch()"
+    ></ion-searchbar>
+
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="options-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <h2 class="heading-1 ion-text-center" *ngIf="!hasNetwork">
+    Unable to connect to internet. Try again
+  </h2>
+
+  <!-- slider -->
+  <ion-slides
+    *ngIf="mainSlides.length > 0" class="slider" pager="true"
+    [options]="slideOpts" #slider (ionSlidesDidLoad)="slidesDidLoad1(slider)">
+    <ion-slide *ngFor="let slide of mainSlides" (click)="sliderClickEvent(slide.link)">
+      <!-- <img [src]="slide?.image.path" /> -->
+      <ion-img [src]="slide?.image.path"></ion-img>
+      <!-- <div class="swiper-button-prev" (click)="prevSlide()"></div>
+      <div class="swiper-button-next" (click)="nextSlide()"></div> -->
+    </ion-slide>
+  </ion-slides>
+
+  <!-- slider end -->
+
+  <!-- Categories Container Start -->
+
+  <div class="scrolling-wrapper categories">
+    <!-- Category Template Start -->
+    <div
+      (click)="openCategories()"
+      class="category"
+      *ngIf="categories.length>0"
+    >
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <i class="fas fa-cubes"></i>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-text-center ion-text-wrap">
+          <h2 translate>ALL_CATEGORIES</h2>
+          <!-- <p>Category</p> -->
+        </ion-col>
+      </ion-row>
+    </div>
+    <div
+      *ngFor="let catey of categories"
+      (click)="openCategory(catey)"
+      class="category"
+    >
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <i class="fas {{catey.icon}}"></i>
+          <!-- <i class="fas fa-cubes"></i> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-text-center ion-text-wrap">
+          <h2>{{catey.name}}</h2>
+          <!-- <p>Category</p> -->
+        </ion-col>
+      </ion-row>
+    </div>
+    <!-- Category Template End -->
+  </div>
+
+  <!-- Categories Container End -->
+
+  <!-- Banner Start -->
+  <ion-slides pager="true" [options]="bannerOpts" class="banner"
+    #banner (ionSlidesDidLoad)="slidesDidLoad(banner)">
+    <ion-slide *ngFor="let banner of banners[0]" (click)="openLinkBanner(banner.link)"
+      [style.background]="(!banner.bg_image)? banner.bg_color : 'url('+banner.bg_image+')'">
+      <div class="banner-caption">
+        <h5 class="banner-title">{{banner.title}}</h5>
+        <p class="banner-desc">{{banner.description}}</p>
+        <p class="banner-link">
+          {{banner.link_label}}
+          <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+        </p>
+      </div>
+      <ion-img class="banner_one" [src]="banner?.image"> </ion-img>
+    </ion-slide>
+  </ion-slides>
+
+  <!-- Banner End -->
+
+  <!-- Row prdoduct start -->
+
+  <h2 *ngIf="trendingProducts?.length>0" class="heading-1" translate>
+    TRENDING_NOW
+  </h2>
+  <ion-grid
+    *ngIf="trendingProducts?.length>0"
+    class="ion-no-padding product-row"
+  >
+    <ion-row>
+      <ion-col
+        size="3" (click)="openProduct(prod.slug)"
+        *ngFor="let prod of trendingProducts"
+        class="ion-no-padding ion-text-center"
+      >
+        <img [src]="prod?.image"/>
+        <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+        <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+        <p *ngIf="prod?.has_offer">{{prod.price}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Banner Start -->
+  <ion-slides
+    pager="true"
+    [options]="bannerOpts"
+    class="banner"
+    #banner
+    (ionSlidesDidLoad)="slidesDidLoad(banner)"
+  >
+    <ion-slide
+      *ngFor="let banner of banners[1]"
+      (click)="openLinkBanner(banner.link)"
+      [style.background]="(!banner.bg_image)? banner.bg_color : 'url('+banner.bg_image+')'"
+    >
+      <div class="banner-caption">
+        <h5 class="banner-title">{{banner.title}}</h5>
+        <p class="banner-desc">{{banner.description}}</p>
+        <p class="banner-link">
+          {{banner.link_label}}
+          <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+        </p>
+      </div>
+      <ion-img class="banner_one" [src]="banner?.image"> </ion-img>
+    </ion-slide>
+  </ion-slides>
+
+  <!-- Banner End -->
+
+  <h2 *ngIf="recentProducts?.length>0" class="heading-1" translate>
+    RECENTLY_ADDED
+  </h2>
+
+  <ion-grid *ngIf="recentProducts?.length>0" class="ion-no-padding product-row">
+    <ion-row>
+      <ion-col
+        size="3" (click)="openProduct(prod.slug)"
+        *ngFor="let prod of recentProducts"
+        class="ion-no-padding ion-text-center"
+      >
+        <img [src]="prod?.image"  />
+        <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+        <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+        <p *ngIf="prod?.has_offer">{{prod.price}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Row product end -->
+
+  <!-- Banner Start -->
+  <ion-slides
+    pager="true"
+    [options]="bannerOpts"
+    class="banner"
+    #banner
+    (ionSlidesDidLoad)="slidesDidLoad(banner)"
+  >
+    <ion-slide
+      *ngFor="let banner of banners[2]"
+      (click)="openLinkBanner(banner.link)"
+      [style.background]="(!banner.bg_image)? banner.bg_color : 'url('+banner.bg_image+')'"
+    >
+      <div class="banner-caption">
+        <h5 class="banner-title">{{banner.title}}</h5>
+        <p class="banner-desc">{{banner.description}}</p>
+        <p class="banner-link">
+          {{banner.link_label}}
+          <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+        </p>
+      </div>
+      <ion-img class="banner_one" [src]="banner?.image"> </ion-img>
+    </ion-slide>
+  </ion-slides>
+
+  <!-- Banner End -->
+
+  <h2 *ngIf="popularProducts?.length>0" class="heading-1" translate>
+    POPULAR
+  </h2>
+
+  <ion-grid
+    *ngIf="popularProducts?.length>0"
+    class="ion-no-padding product-row"
+  >
+    <ion-row>
+      <ion-col
+        size="3" (click)="openProduct(prod.slug)"
+        *ngFor="let prod of popularProducts"
+        class="ion-no-padding ion-text-center"
+      >
+        <img [src]="prod?.image"  />
+        <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+        <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+        <p *ngIf="prod?.has_offer">{{prod.price}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Banner Start -->
+  <ion-slides
+    pager="true"
+    [options]="bannerOpts"
+    class="banner"
+    #banner
+    (ionSlidesDidLoad)="slidesDidLoad(banner)"
+  >
+    <ion-slide
+      *ngFor="let banner of banners[3]"
+      (click)="openLinkBanner(banner.link)"
+      [style.background]="(!banner.bg_image)? banner.bg_color : 'url('+banner.bg_image+')'"
+    >
+      <div class="banner-caption">
+        <h5 class="banner-title">{{banner.title}}</h5>
+        <p class="banner-desc">{{banner.description}}</p>
+        <p class="banner-link">
+          {{banner.link_label}}
+          <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+        </p>
+      </div>
+      <ion-img class="banner_one" [src]="banner?.image"> </ion-img>
+    </ion-slide>
+  </ion-slides>
+
+  <!-- Banner End -->
+
+  <h2 *ngIf="additionalProducts?.length>0" class="heading-1" translate>
+    ADDITIONAL_ITEMS
+  </h2>
+
+  <!-- <div *ngIf="sections[2]"> -->
+
+  <!-- products containder Start -->
+  <div class="products">
+    <!-- product template start-->
+    <div class="product" *ngFor="let prod of additionalProducts">
+      <!-- <img [src]="prod?.image" (click)="openProduct(prod.slug)" /> -->
+      <ion-img [src]="prod?.image" (click)="openProduct(prod.slug)"></ion-img>
+      <div>
+        <p (click)="openProduct(prod.slug)">{{prod.title}}</p>
+        <ion-row>
+          <ion-col class="ion-no-padding ion-align-self-center" size="9">
+            <h3 *ngIf="!prod.has_offer">{{prod.price}}</h3>
+            <h3 *ngIf="prod.has_offer">
+              {{prod.offer_price}} <span class="offer">{{prod.price}}</span>
+            </h3>
+          </ion-col>
+          <ion-col
+            class="ion-no-padding ion-text-right ion-align-self-center"
+            size="3"
+          >
+            <ion-icon name="cart-outline" (click)="openProduct(prod.slug)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <!-- product template end -->
+  </div>
+  <!-- Products Container End -->
+  <!-- </div> -->
+
+  <!-- Sections End -->
+
+  <ion-infinite-scroll
+    (ionInfinite)="loadMoreProducts(searchMoreMeta?.links?.next, $event)"
+  >
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

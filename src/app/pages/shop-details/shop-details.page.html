@@ -1,0 +1,149 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title translate>DETAILS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- header start -->
+  <div class="header" *ngIf="shop.banner_image">
+    <img [src]="shop.banner_image" />
+    <ion-row class="header-item">
+      <ion-col class="ion-no-padding">
+        <ion-item class="seller_info" lines="none">
+          <ion-thumbnail slot="start"
+            ><img [src]="shop?.image"
+          /></ion-thumbnail>
+          <ion-label>
+            <h3>
+              {{shop?.name}}
+              <ion-icon *ngIf="shop?.verified" name="checkmark-circle"></ion-icon>
+            </h3>
+
+            <p>Member Since: {{shop?.member_since}}</p>
+            <p *ngIf="shop?.rating">
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating ==0"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating>=1"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 0 && shop?.rating <1"
+                name="star-half"
+              >
+              </ion-icon>
+
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating <=1"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating>=2"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 1 && shop?.rating <2"
+                name="star-half"
+              >
+              </ion-icon>
+
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating <=2"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating>=3"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 2 && shop?.rating <3"
+                name="star-half"
+              >
+              </ion-icon>
+
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating <=3"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating>=4"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 3 && shop?.rating <4"
+                name="star-half"
+              >
+              </ion-icon>
+
+              <ion-icon
+                color="medium"
+                *ngIf="shop?.rating <=4"
+                name="star-outline"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating==5"
+                name="star"
+              ></ion-icon>
+              <ion-icon
+                color="warning"
+                *ngIf="shop?.rating > 4 && shop?.rating <5"
+                name="star-half"
+              >
+              </ion-icon>
+              ({{shop?.rating}})
+            </p>
+          </ion-label>
+
+          <!-- <ion-button slot="end" size="small" shape="round">Contact Seller</ion-button> -->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!-- header end -->
+
+  <ion-grid>
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <h2>{{shop?.active_listings_count}}</h2>
+        <p translate>ACTIVE_LISTINGS</p>
+      </ion-col>
+      <ion-col>
+        <h2>{{shop?.rating}}</h2>
+        <p translate>RATING</p>
+      </ion-col>
+      <ion-col>
+        <h2>{{shop?.sold_item_count}}</h2>
+        <p translate>ITEMS_SOLD</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p><b translate>DESCRIPTION</b></p>
+        <p>{{shop?.description}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

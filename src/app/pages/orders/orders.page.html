@@ -1,0 +1,191 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>MY_ORDERS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Order Start -->
+  <div class="order" *ngFor="let order of orders?.data">
+    <ion-item lines="none">
+      <ion-thumbnail slot="start">
+        <img [src]="order.shop.image" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>
+          {{order.shop.name}}
+          <ion-icon
+            *ngIf="order.shop.verified"
+            name="checkmark-circle"
+          ></ion-icon>
+        </h2>
+
+        <p *ngIf="order?.shop?.rating">
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating ==0"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=1"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 0 && order?.shop?.rating <1"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=1"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=2"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 1 && order?.shop?.rating <2"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=2"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=3"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 2 && order?.shop?.rating <3"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=3"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating>=4"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 3 && order?.shop?.rating <4"
+            name="star-half"
+          >
+          </ion-icon>
+
+          <ion-icon
+            color="medium"
+            *ngIf="order?.shop?.rating <=4"
+            name="star-outline"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating==5"
+            name="star"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="order?.shop?.rating > 4 && order?.shop?.rating <5"
+            name="star-half"
+          >
+          </ion-icon>
+          <!-- ({{order?.shop?.rating}}) -->
+        </p>
+      </ion-label>
+      <ion-badge slot="end" mode="ios" color="danger">
+        {{order.order_status}}
+      </ion-badge>
+      <!-- <ion-badge slot="end" mode="ios" *ngIf="order.payment_status=='PAID'" color="success">{{order.order_status}}</ion-badge> -->
+    </ion-item>
+    <div class="scrolling-wrapper">
+      <div
+        class="card"
+        *ngFor="let item of order.items"
+        (click)="openProduct(item.slug)"
+      >
+        <img [src]="item.image" />
+      </div>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            size="small"
+            (click)="contactSeller(order)"
+            shape="round"
+            color="medium"
+            translate
+          >
+            CONTACT_SELLER</ion-button
+          >
+          <ion-button
+            size="small"
+            shape="round"
+            color="medium"
+            (click)="viewOrder(order.id)"
+            translate
+          >
+            DETAILS</ion-button
+          >
+          <ion-button
+            size="small"
+            shape="round"
+            *ngIf="!order?.dispute_id"
+            (click)="openDispute(order)"
+            color="medium"
+            translate
+          >
+            OPEN_DISPUTE
+          </ion-button>
+          <!-- <ion-button size="small" shape="round" *ngIf="order?.tracking_id" (click)="track(order)" color="medium">Track</ion-button> -->
+          <!-- <ion-button  size="small" shape="round" *ngIf="order.disputed" (click)="openDispute(order)" color="danger">Dispute Details</ion-button> -->
+          <ion-button
+            size="small"
+            shape="round"
+            color="medium"
+            (click)="presentAlertConfirm(order.id)"
+            *ngIf="!order?.goods_received"
+            translate
+          >
+            CONFIRMED_RECEIVED
+          </ion-button>
+          <ion-button size="small" shape="round" color="medium" (click)="evaluateOrder(order)"
+            *ngIf="order?.can_evaluate" translate>
+            EVALUATE
+          </ion-button>
+        </ion-col>
+        <ion-col size="3" class="ion-text-end ion-align-self-center">
+          <ion-label>
+            <h2 class="price">{{order.grand_total}}</h2>
+            <p translate>NET_TOTAL</p>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="loadOrders(orders?.links?.next, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- ORder End -->
+</ion-content>

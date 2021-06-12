@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  
+
+
+  <!-- Products start -->
+
+  <div class="products margin-top" [hidden]="isHidden">
+    <!-- product template start-->
+    <div class="product" *ngFor="let prod of lists">
+      <img [src]="prod?.image" (click)="openProduct(prod.slug)" tappable />
+      <div>
+        <p>{{prod.title}}</p>
+        <ion-row>
+          <ion-col class="ion-no-padding" size="8">
+            <h3 *ngIf="!prod.has_offer">{{prod.price}}</h3>
+            <h3 *ngIf="prod.has_offer">
+              {{prod.offer_price}} <span class="offer">{{prod.price}}</span>
+            </h3>
+          </ion-col>
+          <ion-col class="ion-no-padding ion-text-right" size="4">
+            <ion-icon name="cart-outline" (click)="openProduct(prod.slug)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <!-- product template end -->
+  </div>
+  <div class="margin-top" [hidden]="!isHidden">    
+      <img src="assets/placeholder.png" />
+
+  </div>
+
+  <!-- <ion-infinite-scroll (ionInfinite)="loadMoreProducts(productsMeta.links.next, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+
+</ion-content>

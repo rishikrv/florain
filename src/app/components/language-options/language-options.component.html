@@ -1,0 +1,19 @@
+<ion-list lines="none">
+  <ion-radio-group [value]="lang" (ionChange)="onValueChange($event)">
+    <ion-list-header>
+      <ion-label>
+        Language Options
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>English</ion-label>
+      <ion-radio value="en"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bengali</ion-label>
+      <ion-radio value="bg"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>

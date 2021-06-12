@@ -1,0 +1,208 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>OPEN_DISPUTE</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Basic Info Start -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p><b>Order Details</b></p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <p class="option">Order Number</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{dispute.order_number}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <p class="option">Order Status</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{dispute.order_status}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <p class="option">Amount Paid</p>
+      </ion-col>
+      <ion-col>
+        <p class="value">{{dispute.grand_total}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p><b>Open Dispute</b></p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-wrap">
+        <p translate>SELECT_REASON</p>
+        <ion-select
+          mode="ios"
+          interface="action-sheet"
+          placeholder="Select Reason"
+          [(ngModel)]="disputeForm.dispute_type_id"
+          class="ion-text-wrap"
+        >
+          <ion-select-option
+            class="ion-text-wrap"
+            *ngFor="let item of dispute?.dispute_type | keyvalue"
+            [value]="item.key"
+            >{{item.value}}</ion-select-option
+          >
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row *ngIf="dispute?.goods_received">
+      <ion-col>
+        <p translate>GOODS_RECEIVED</p>
+        <ion-select
+          mode="ios"
+          interface="popover"
+          placeholder="Goods Received?"
+          [(ngModel)]="disputeForm.order_received"
+        >
+          <ion-select-option value="true" selected>Yes</ion-select-option>
+          <ion-select-option value="false">No</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row *ngIf="!dispute?.goods_received">
+      <ion-col>
+        <p translate>GOODS_RECEIVED</p>
+        <ion-select
+          interface="popover"
+          mode="ios"
+          placeholder="Goods Received?"
+          [(ngModel)]="disputeForm.order_received"
+        >
+          <ion-select-option value="true" translate>YES</ion-select-option>
+          <ion-select-option value="false" translate>NO</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="disputeForm.order_received == 'true'">
+      <ion-col>
+        <p translate>SELECT_PRODUCT</p>
+        <ion-select
+          mode="ios"
+          interface="action-sheet"
+          placeholder="Select Product"
+          [(ngModel)]="disputeForm.product_id"
+        >
+          <ion-select-option
+            *ngFor="let item of dispute?.items | keyvalue"
+            [value]="item.key"
+            >{{item.value}}</ion-select-option
+          >
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>REFUND_AMOUNT</p>
+        <ion-input
+          type="number"
+          placeholder="Refund amount"
+          [(ngModel)]="disputeForm.refund_amount"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+    <p *ngIf="disputeForm?.refund_amount > dispute?.grand_total_raw">
+      <ion-text color="danger"
+        >Value must be less than or equal to {{dispute?.grand_total}}</ion-text
+      >
+    </p>
+
+    <ion-row>
+      <ion-col>
+        <p translate>DESCRIPTION</p>
+        <ion-textarea
+          placeholder="Description"
+          [(ngModel)]="disputeForm.description"
+        ></ion-textarea>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" *ngIf="disputeForm.order_received == 'true'">
+          <ion-label translate>RETURN_GOODS</ion-label>
+          <ion-checkbox
+            slot="start"
+            [(ngModel)]="disputeForm.return_goods"
+            checked="false"
+          ></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <p *ngIf="disputeForm.return_goods" translate>RETURN_GOODS_MESSAGE</p>
+
+    <ion-row class="ion-margin-right">
+      <ion-col class="ion-text-right">
+        <ion-button
+          shape="round"
+          color="primary"
+          (click)="addDispute()"
+          translate
+          >OPEN_DISPUTE</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Basic Info End -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p><b>How to Open a Dispute</b></p>
+        <p>
+          <b>First Step:</b>
+          Before opening a dispute, we recommend you to contact the seller to
+          discuss about the issue. Most of the case seller will help to solve
+          the issue.
+        </p>
+
+        <p>
+          <b>Second Step:</b>
+          You can choose between two options:
+        </p>
+
+        <p>
+          Refund Only – this means that either you did not receive the item and
+          you’re applying for a full refund or you did receive the item and you
+          want a partial refund (without having to send the item back), OR
+        </p>
+        <p>
+          Return Goods – this means that you want to return the item and apply
+          for a full refund.
+        </p>
+
+        <p>
+          <b>Third Step:</b>
+          If you and seller can't come to an agreement, you can appeal the
+          dispute to review. This point we will step in and help.
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

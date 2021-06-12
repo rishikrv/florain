@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title translate>DETAILS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- header start -->
+  <div class="header" *ngIf="shop.cover_image">
+    <img [src]="shop.cover_image" />
+    <ion-row class="header-item">
+      <ion-col class="ion-no-padding">
+        <ion-item class="seller_info" lines="none">
+          <ion-thumbnail slot="start"
+            ><img [src]="shop?.image"
+          /></ion-thumbnail>
+          <ion-label>
+            <h3>
+              {{shop?.name}}
+              <ion-icon
+                *ngIf="shop?.verified"
+                name="checkmark-circle"
+              ></ion-icon>
+            </h3>
+            <p>{{shop?.origin}}</p>
+            <p>Available from: {{shop?.available_from}}</p>
+          </ion-label>
+
+          <!-- <ion-button slot="end" size="small" shape="round">Contact Seller</ion-button> -->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!-- header end -->
+
+  <!-- <ion-grid>
+      <ion-row class="ion-text-center">
+        <ion-col>
+          <h2>{{shop?.active_listings_count}}</h2>
+          <p>Active Listings</p>
+        </ion-col>
+        <ion-col>
+          <h2>{{shop?.rating}}</h2>
+          <p>Rating</p>
+        </ion-col>
+        <ion-col>
+          <h2>{{shop?.sold_item_count}}</h2>
+          <p>Items Sold</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p><b>Description</b></p>
+        <p>{{shop?.description}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

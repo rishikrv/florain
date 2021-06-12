@@ -1,0 +1,234 @@
+ion-content {
+  --background: rgb(250, 251, 252);
+  .heading-1 {
+    font-size: 1.1em;
+    margin: 16px 0px;
+    color: var(--ion-color-tertiary);
+  }
+}
+
+//*************************
+//*** HEADER SECTION ****
+//*************************
+
+.header {
+  //background: var(--ion-color-primary);
+  height: 110px;
+  border-radius: 0% 0% 10% 10%;
+}
+
+//*************************
+//*** PROGRESSBAR SECTION ****
+//*************************
+.order-status-container {
+  z-index: 3;
+  display: flex;
+  width: 100%;
+  height: 120px;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+}
+.progressbar {
+  counter-reset: step;
+  padding: 0;
+  float: left;
+}
+.progressbar {
+  counter-reset: step;
+}
+.progressbar li {
+  list-style-type: none;
+  width: 33%;
+  float: left;
+  font-size: 0.7em;
+  text-transform: capitalize;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+.progressbar li:before {
+  width: 30px;
+  height: 30px;
+  content: "";
+  font-size: 1.6em;
+  color: #fff;
+  line-height: 30px;
+  border: 2px solid #e5e6e6;
+
+  display: block;
+  text-align: center;
+  margin: 0 26px 10px 26px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.progressbar li:after {
+  width: 100%;
+  height: 2px;
+  content: "";
+  position: absolute;
+  background-color: #e5e6e6;
+  top: 15px;
+  left: -50%;
+  z-index: -1;
+}
+.progressbar li:first-child:after {
+  content: none;
+}
+.progressbar li.active {
+  color: #eae7e5;
+  span {
+    color: var(--ion-color-success);
+  }
+}
+.progressbar li.active:before {
+  border-color: #ffffff;
+  content: "✓";
+  //box-shadow: 0px 0px 4px #656464;
+  border: 2px solid var(--ion-color-success);
+  background: var(--ion-color-success);
+}
+.progressbar li.active + li:after {
+  background-color: var(--ion-color-success);
+}
+//*************************
+//*** SERVICES SECTION ****
+//*************************
+.shipping {
+  max-width: 90%;
+
+  ion-item {
+    margin-top: 8px;
+    border-radius: 8px;
+    img {
+      height: 50px;
+      border-radius: 8px;
+      position: relative;
+      top: -14px;
+      //box-shadow: 0px 4px 15px -6px rgba(0, 0, 0, 0.64);
+      background: #fff;
+      z-index: 3;
+    }
+    h2 {
+      margin: 0px;
+    }
+  }
+  .small-button {
+    height: 30px;
+    width: 30px;
+    --border-radius: 50%;
+  }
+
+  ion-button {
+    text-transform: capitalize;
+  }
+}
+
+//*************************
+//*** STYLIST SECTION ****
+//*************************
+.stylists {
+  max-width: 90%;
+  .stylist {
+    background: #fff;
+    margin: 24px 6px 6px 6px;
+    padding: 0px 8px;
+    overflow: visible;
+    border-radius: 8px;
+
+    ion-label {
+      position: relative;
+      top: -20px;
+    }
+
+    h2 {
+      text-transform: capitalize;
+      margin: 0px;
+      color: var(--ion-color-secondary);
+    }
+    p {
+      margin: 0px;
+      font-size: 0.7em;
+    }
+
+    img {
+      border-radius: 8px;
+      max-height: 80px;
+      //width: 150px;
+      position: relative;
+      top: -16px;
+      margin-bottom: 6px;
+      //box-shadow: 0px 4px 15px -6px rgba(0, 0, 0, 0.64);
+      background-color: #fff;
+    }
+  }
+}
+
+//*************************
+//*** TIME     SECTION ****
+//*************************
+
+.time {
+  max-width: 90%;
+
+  ion-list {
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  ion-item {
+    img {
+      height: 50px;
+      border-radius: 8px;
+      position: relative;
+      top: -14px;
+      //box-shadow: 0px 4px 15px -6px rgba(0, 0, 0, 0.64);
+      background: #fff;
+      z-index: 3;
+    }
+    h2 {
+      margin: 0px;
+    }
+  }
+  ion-button {
+    text-transform: capitalize;
+  }
+}
+
+//*************************
+//*** PAYMENT  SECTION ****
+//*************************
+.checkout {
+  max-width: 90%;
+
+  ion-item,
+  ion-list {
+    border-radius: 8px;
+  }
+
+  .order-items {
+    margin-top: 8px;
+    border-radius: 8px;
+    .price {
+      color: var(--ion-color-danger);
+    }
+    h2 {
+      margin: 0px;
+    }
+  }
+}
+
+//*************************
+//*** FOOTER  SECTION ****
+//*************************
+.footer {
+  .price {
+    font-weight: bold;
+    color: var(--ion-color-danger);
+  }
+  ion-button {
+    text-transform: capitalize;
+  }
+}

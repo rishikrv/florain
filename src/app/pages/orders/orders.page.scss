@@ -1,0 +1,90 @@
+ion-content {
+  --background: #f9f9f9;
+}
+.sections {
+  padding: 10px 16px;
+  h2 {
+    font-size: 0.7em;
+    text-transform: capitalize;
+    margin: 0px;
+    //border-bottom: 4px solid var(--ion-color-primary);
+    //border-bottom: 2px solid rgb(207, 207, 207);
+    //color: rgb(207, 207, 207);
+  }
+  p {
+    margin: 0px;
+    font-size: 0.6em;
+    color: var(--ion-color-medium) !important;
+  }
+}
+
+.active-section {
+  // border-left: 1px solid rgb(223, 223, 223) !important;
+  // border-right: 1px solid rgb(223, 223, 223)  !important;
+  // border-top: 1px solid rgb(223, 223, 223)  !important;
+  // border-radius: 8px 8px 0px 0px;
+  h2 {
+    color: var(--ion-color-primary);
+    font-size: 0.8em;
+  }
+  background: #fff;
+  border-radius: 8px;
+}
+
+.price {
+  font-weight: bold;
+  color: var(--ion-color-danger);
+}
+
+ion-item ion-thumbnail {
+  height: 40px;
+  width: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+p {
+  margin: 0px;
+  font-size: 0.7em !important;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  padding: 8px;
+}
+
+.card {
+  display: inline-block;
+  width: 80px;
+  margin-left: 8px;
+  box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.03);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.order {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px;
+  padding: 8px;
+  box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.02);
+}
+
+ion-button {
+  text-transform: capitalize;
+  font-size: 0.7em;
+}
+
+ion-item {
+  ion-badge {
+    font-size: 0.6em;
+  }
+}

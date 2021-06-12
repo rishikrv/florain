@@ -1,0 +1,49 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>OFFERS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-content>
+    <div class="products">
+      <!-- product template start-->
+      <div class="product">
+        <img [src]="shop?.image" />
+        <div>
+          <p>{{shop?.name}}</p>
+          <h3>{{shop?.brand}}</h3>
+          <p>{{shop?.gtin_type}}: {{shop?.gtin}}</p>
+        </div>
+      </div>
+      <!-- product template end -->
+    </div>
+
+    <div class="order" *ngFor="let whishlist of shop?.listings">
+      <ion-item lines="none" (click)="openProduct(whishlist.slug)">
+        <ion-thumbnail class="small-thumb" slot="start">
+          <img [src]="whishlist.image" />
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">
+          <ion-badge mode="ios">{{whishlist.condition}}</ion-badge>
+          <p class="ion-text-wrap">{{whishlist.title}}</p>
+          <h2 *ngIf="!whishlist.has_offer" class="price">
+            {{whishlist.price }}
+          </h2>
+          <h2 *ngIf="whishlist.has_offer" class="price">
+            <span class="offer_price">{{whishlist.price}}</span>
+            {{whishlist.offer_price }}
+          </h2>
+        </ion-label>
+        <ion-icon
+          (click)="addToCart(whishlist)"
+          slot="end"
+          name="cart-outline"
+        ></ion-icon>
+      </ion-item>
+      <!-- cart item end -->
+    </div>
+  </ion-content></ion-content
+>

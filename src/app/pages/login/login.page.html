@@ -1,0 +1,301 @@
+<ion-content>
+  <form [formGroup]="userForm" *ngIf="loginForm">
+    <!-- Login Form Start -->
+    <ion-grid>
+      <!-- Heading Start -->
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-heading">
+        <ion-col size="9">
+          <h2 translate>SIGN_IN</h2>
+        </ion-col>
+      </ion-row>
+      <!-- Heading End-->
+
+      <!-- Social buttons start -->
+      <ion-row class="ion-justify-content-center item-social-buttons">
+        <!-- <ion-col size="3" class="ion-align-self-center ion-text-center">
+          <ion-button color="dark">
+            <ion-icon slot="icon-only" name="logo-apple"></ion-icon>
+          </ion-button>
+        </ion-col> -->
+        <ion-col size="3" class="ion-align-self-center ion-text-center">
+          <ion-button color="google" (click)="googleSignup()">
+            <ion-icon slot="icon-only" name="logo-google"> </ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3" class="ion-align-self-center ion-text-center">
+          <ion-button color="facebook" (click)="facebookLoginButton()">
+            <ion-icon slot="icon-only" name="logo-facebook"> </ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- social buttons end -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <p translate>OR</p>
+        </ion-col>
+      </ion-row>
+      <!-- Heading End-->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p translate>EMAIL</p>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p translate>PASSWORD</p>
+          <ion-input
+            [type]="showPassword?'text':'password'"
+            formControlName="password"
+          >
+            <ion-button
+              size="small"
+              fill="clear"
+              color="light"
+              (click)="togglePassword()"
+            >
+              <ion-icon
+                *ngIf="!showPassword"
+                name="eye-outline"
+                slot="icon-only"
+              ></ion-icon>
+              <ion-icon *ngIf="showPassword" name="eye-off-outline"></ion-icon>
+            </ion-button>
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Login Button Start -->
+
+      <ion-row class="ion-justify-content-center item-button">
+        <!-- <ion-col size="4.5" class="ion-align-self-center">
+        <p>Forgot Password?</p>
+      </ion-col> -->
+        <ion-col size="9" class="ion-align-self-center ion-text-end">
+          <ion-button
+            translate
+            shape="round"
+            color="secondary"
+            (click)="validateLogin()"
+          >
+            <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+            LOGIN
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- Login Button End -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <p translate>
+            DONT_HAVE_ACCOUNT
+            <span (click)="toggleLogin()" translate>SIGN_UP</span>
+          </p>
+        </ion-col>
+      </ion-row>
+      <!-- Heading End-->
+
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <ion-button
+            translate
+            (click)="goBack()"
+            color="light"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            GO_BACK
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <form [formGroup]="userRegForm" *ngIf="!loginForm">
+    <ion-grid>
+      <!-- Heading Start -->
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-heading">
+        <ion-col size="9">
+          <h2 translate>SIGN_UP</h2>
+        </ion-col>
+      </ion-row>
+      <!-- Heading End-->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p translate>FULLNAME</p>
+          <ion-input
+            ype="text"
+            placeholder="Full Name"
+            formControlName="name"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p translate>EMAIL</p>
+          <ion-input
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p translate>PASSWORD</p>
+          <ion-input
+            [type]="showPassword?'text':'password'"
+            placeholder="Password"
+            formControlName="password"
+          >
+            <ion-button
+              size="small"
+              fill="clear"
+              color="light"
+              (click)="togglePassword()"
+            >
+              <ion-icon
+                *ngIf="!showPassword"
+                name="eye-outline"
+                slot="icon-only"
+              ></ion-icon>
+              <ion-icon
+                *ngIf="showPassword"
+                name="eye-off-outline"
+              ></ion-icon> </ion-button
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p translate>CONFIRM_PASSWORD</p>
+          <ion-input
+            [type]="showPassword1?'text':'password'"
+            placeholder="Confirm Password"
+            formControlName="password_confirmation"
+          >
+            <ion-button
+              size="small"
+              fill="clear"
+              color="light"
+              (click)="togglePassword1()"
+            >
+              <ion-icon
+                *ngIf="!showPassword1"
+                name="eye-outline"
+                slot="icon-only"
+              ></ion-icon>
+              <ion-icon
+                *ngIf="showPassword1"
+                name="eye-off-outline"
+              ></ion-icon> </ion-button
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9" class="ion-no-padding">
+          <ion-item color="undefined" lines="none">
+            <p translate>ACCEPT_MARKETING</p>
+            <ion-checkbox
+              slot="start"
+              mode="ios"
+              formControlName="accepts_marketing"
+            ></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- Input Item End -->
+
+      <!-- Input Item Start -->
+      <!-- <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9" class="ion-no-padding">
+          <ion-item color="undefined" lines="none">
+            <p>Agree terms and conditions</p>
+            <ion-checkbox slot="start" formControlName="agree"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row> -->
+      <!-- Input Item End -->
+
+      <!-- SignUp Button Start -->
+
+      <ion-row class="ion-justify-content-center item-button">
+        <ion-col size="9" class="ion-align-self-center ion-text-end">
+          <ion-button
+            shape="round"
+            color="secondary"
+            expand="block"
+            (click)="register()"
+            translate
+          >
+            <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+            SIGN_UP
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- SignUp Button End -->
+
+      <ion-row class="ion-justify-content-center item-button">
+        <ion-col size="9" class="ion-align-self-center ion-text-center">
+          <p translate>
+            SIGNUP_AGREEMENT
+            <span translate>TERMS_OF_SERVICE</span>
+          </p>
+        </ion-col>
+      </ion-row>
+
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <p translate>
+            ALREADY_HAVE_ACCOUNT
+            <span (click)="toggleLogin()" translate>LOGIN</span>
+          </p>
+        </ion-col>
+      </ion-row>
+      <!-- Heading End-->
+
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <ion-button
+            translate
+            (click)="goBack()"
+            color="light"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            GO_BACK
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <!-- Login Form End  -->
+</ion-content>

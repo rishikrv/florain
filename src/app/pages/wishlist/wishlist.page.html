@@ -1,0 +1,81 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>WISHLIST</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <h2
+    translate
+    *ngIf="products?.data?.length==0"
+    class="ion-text-center heading-1"
+  >
+    EMPTY_WISHLIST
+  </h2>
+
+  <ion-row *ngIf="!isAuthenticated?.value" class="login">
+    <ion-col class="ion-text-center">
+      <h2 class="heading-1" translate>WISHLIST_MESSAGE</h2>
+      <ion-button shape="round" color="danger" (click)="login()" translate>
+        LOGIN
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="isAuthenticated?.value">
+    <!-- Cart Item Start -->
+    <div class="order" *ngFor="let whishlist of products?.data">
+      <ion-item-sliding>
+        <!-- cart item start -->
+        <ion-item lines="none" (click)="openProduct(whishlist.slug)">
+          <ion-thumbnail class="small-thumb" slot="start">
+            <img [src]="whishlist.image" />
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap">
+            <ion-badge
+              mode="ios"
+              color="primary"
+              *ngFor="let label of whishlist.labels"
+            >
+              {{label}}
+            </ion-badge>
+            <h2 class="ion-text-wrap">{{whishlist.title}}</h2>
+
+            <h2 *ngIf="!whishlist.has_offer" class="price">
+              {{whishlist.price }}
+            </h2>
+            <h2 *ngIf="whishlist.has_offer" class="price">
+              <span class="offer_price">{{whishlist.price}}</span>
+              {{whishlist.offer_price }}
+            </h2>
+          </ion-label>
+
+          <!-- <ion-button slot="end" (click)="addToCart(whishlist)" mode="ios">
+            <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+          </ion-button> -->
+          <ion-button slot="end" (click)="openProduct(whishlist.slug)" mode="ios">
+            <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <!-- cart item end -->
+        <ion-item-options side="end">
+          <ion-item-option (click)="delete(whishlist)" color="danger">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </div>
+
+    <!-- Cart Item End -->
+  </div>
+
+  <ion-infinite-scroll
+    *ngIf="isAuthenticated?.value"
+    (ionInfinite)="loadWishes(products?.links?.next, $event)"
+  >
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

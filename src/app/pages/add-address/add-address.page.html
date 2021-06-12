@@ -1,0 +1,232 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>ADD_ADDRESS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Basic Info Start -->
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center" *ngIf="isAuthenticated.value">
+      <ion-col size="10">
+        <p translate>ADDRESS_TYPE</p>
+        <ion-select
+          mode="ios"
+          interface="popover"
+          [(ngModel)]="address.address_type"
+        >
+          <ion-select-option value="Primary" translate
+            >PRIMARY</ion-select-option
+          >
+          <ion-select-option value="Billing" translate
+            >BILLING</ion-select-option
+          >
+          <ion-select-option value="Shipping" translate
+            >SHIPPING</ion-select-option
+          >
+        </ion-select>
+        <p translate *ngIf="!address.address_type && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>CONTACT_PERSON</p>
+        <ion-input [(ngModel)]="address.address_title"></ion-input>
+        <p translate *ngIf="!address.address_title && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>CONTACT_NUMBER</p>
+        <ion-input [(ngModel)]="address.phone"></ion-input>
+        <p translate *ngIf="!address.phone && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>COUNTRY</p>
+        <ion-select
+          mode="ios"
+          [compareWith]="compareWithFn"
+          interface="popover"
+          (ionChange)="getStates($event)"
+          [(ngModel)]="address.country_id"
+        >
+          <ion-select-option
+            *ngFor="let country of countries"
+            [value]="country.id"
+            >{{country.name}}</ion-select-option
+          >
+        </ion-select>
+        <p translate *ngIf="!address.country_id && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>ZIPCODE</p>
+        <ion-input [(ngModel)]="address.zip_code"></ion-input>
+        <p translate *ngIf="!address.zip_code && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>ADDRESS_LINE_1</p>
+        <ion-input [(ngModel)]="address.address_line_1"></ion-input>
+        <p translate *ngIf="!address.address_line_1 && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>ADDRESS_LINE_2</p>
+        <ion-input [(ngModel)]="address.address_line_2"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10">
+        <p translate>CITY</p>
+        <ion-input [(ngModel)]="address.city"></ion-input>
+        <p translate *ngIf="!address.city && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="states.length>0">
+      <ion-col size="10">
+        <p translate>STATE</p>
+        <ion-select
+          interface="popover"
+          mode="ios"
+          [(ngModel)]="address.state_id"
+        >
+          <ion-select-option *ngFor="let state of states" [value]="state.id"
+            >{{state.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isAuthenticated.value">
+      <ion-col size="10">
+        <p translate>EMAIL</p>
+        <ion-input type="email" [(ngModel)]="address.email"></ion-input>
+        <p translate *ngIf="!address.email && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+        <p
+          translate
+          *ngIf="!validateEmail(address.email) && address.email  && submit"
+          class="warning"
+        >
+          INVALID_EMAIL
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="!isAuthenticated.value">
+      <ion-col size="10">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label translate>CREATE_ACCOUNT</ion-label>
+          <ion-checkbox
+            slot="start"
+            mode="ios"
+            [(ngModel)]="address.create_account"
+          ></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="address.create_account">
+      <ion-col size="10">
+        <p translate>PASSWORD</p>
+        <ion-input type="password" [(ngModel)]="address.password"></ion-input>
+        <p translate *ngIf="!address.password && submit" class="warning">
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="address.create_account">
+      <ion-col size="10">
+        <p translate>CONFIRM_PASSWORD</p>
+        <ion-input
+          type="password"
+          [(ngModel)]="address.password_confirmation"
+        ></ion-input>
+        <p
+          translate
+          *ngIf="!address.password_confirmation && submit"
+          class="warning"
+        >
+          REQUIRED_FIELD_ERROR_MESSAGE
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <p
+      translate
+      *ngIf="address.password!=address.confirm_password"
+      class="warning"
+    >
+      INVALID_PASSWORD
+    </p>
+
+    <ion-row class="ion-justify-content-center" *ngIf="address.create_account">
+      <ion-col size="10">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-label class="ion-text-wrap" translate> GET_OFFERS</ion-label>
+          <ion-checkbox
+            slot="start"
+            mode="ios"
+            [(ngModel)]="address.accepts_marketing"
+          >
+          </ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10" class="ion-text-right">
+        <ion-button
+          *ngIf="isAuthenticated.value"
+          shape="round"
+          (click)="validateForm()"
+          translate
+        >
+          ADD_ADDRESS
+        </ion-button>
+
+        <ion-button
+          *ngIf="!isAuthenticated.value"
+          shape="round"
+          (click)="validateGuestForm()"
+          translate
+        >
+          ADD_ADDRESS
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Basic Info End -->
+</ion-content>

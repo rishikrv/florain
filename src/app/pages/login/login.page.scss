@@ -1,0 +1,128 @@
+//*************************
+//*** PAGE BACKGROUND  ****
+//*************************
+ion-content {
+  //CAN BE ANY COLOR OR IMAGE
+  // --background: var(--ion-color-primary);
+  --background: url("../../../assets/back1.jpg") 0 0/100% 100% no-repeat;
+}
+
+ion-grid {
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.6068802521008403) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+//*************************
+//*** LOADING FORM HEADING SECTION ****
+//*************************
+.item-heading {
+  margin: 30px 0px;
+  //heading
+  h2 {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #fff;
+  }
+}
+
+.item-sub-heading {
+  margin: 30px 0px;
+  p {
+    font-size: 0.7em;
+    margin: 3px 0px;
+    color: #fff;
+    span {
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: underline;
+      color: var(--ion-color-secondary);
+    }
+  }
+
+  ion-button {
+    text-transform: capitalize;
+  }
+}
+//*************************
+//*** LOGIN FORM INPUT SECTION ****
+//*************************
+.item-input {
+  //input field
+  ion-input {
+    --background: rgba(255, 255, 255, 0.3);
+    --color: #fff;
+    border-radius: 4px;
+    // border-bottom: 3px solid;
+    // border-image-slice: 1;
+    // border-image-source: linear-gradient(
+    //   90deg,
+    //   var(--ion-color-light) 0%,
+    //   var(--ion-color-primary) 50%
+    // );
+    flex-direction: row-reverse;
+    display: flex;
+  }
+  //label
+  p {
+    font-size: 0.7em;
+    margin: 3px 0px;
+    color: #fff;
+  }
+}
+
+//*************************
+//*** LOGIN BUTTON SECTION ****
+//*************************
+.item-button {
+  p {
+    font-size: 0.8em;
+    margin: 3px 0px;
+    color: #fff;
+    span {
+      font-weight: bold;
+      color: var(--ion-color-secondary);
+    }
+  }
+
+  ion-button {
+    font-size: 0.8em;
+    text-transform: capitalize;
+    // --background: linear-gradient(
+    //   90deg,
+    //   var(--ion-color-light) 0%,
+    //   var(--ion-color-primary) 50%
+    // );
+  }
+}
+
+//*************************
+//*** SOCIALS BUTTON SECTION ****
+//*************************
+.item-social-buttons {
+  margin: 30px 0px;
+  ion-button {
+    height: 60px;
+    width: 60px;
+    --border-radius: 50%;
+  }
+}
+
+//*************************
+//*** FOOTER SECTION ****
+//*************************
+
+.item-footer {
+  background: url("../../../assets/back1.jpg") 0 0/100% 100% no-repeat;
+  p {
+    font-size: 0.8em;
+    margin: 16px 0px;
+    color: #fff;
+    span {
+      font-weight: bold;
+      color: var(--ion-color-secondary);
+    }
+  }
+}

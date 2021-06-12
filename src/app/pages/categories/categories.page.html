@@ -1,0 +1,23 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>CATEGORIES</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="categories">
+    <ion-row class="ion-justify-content-center">
+      <ion-col
+        size="3.4"
+        *ngFor="let category of categories"
+        class="category ion-text-center"
+        (click)="openCategory(category)">
+        <i class="fa {{category.icon}}"></i>
+        <h2>{{category.name}}</h2>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

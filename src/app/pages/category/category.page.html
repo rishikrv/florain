@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button  defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{category?.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <div class="header"  [style.background-image]="'url('+category?.cover_image+')'">
+   
+  </div> -->
+
+  <img *ngIf="category.cover_image" [src]="category?.cover_image" />
+
+  <!-- Categories Container Start -->
+
+  <div class="scrolling-wrapper categories">
+    <!-- Category Template Start -->
+    <ion-card
+      *ngFor="let catey of categories"
+      (click)="selectCategory(catey, 'category')"
+      class="category ion-no-margin"
+      mode="ios"
+      [class.active-category]="catey.active"
+    >
+      <ion-row>
+        <ion-col class="ion-text-center ion-text-wrap">
+          <h2>{{catey.name}}</h2>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <!-- Category Template End -->
+  </div>
+
+  <!-- Categories Container End -->
+
+  <!-- Categories Container Start -->
+
+  <div class="scrolling-wrapper categories">
+    <!-- Category Template Start -->
+    <ion-card
+      *ngFor="let catey of subCategories"
+      (click)="selectCategory(catey, 'subCategory')"
+      class="category ion-no-margin"
+      mode="ios"
+      [class.active-category]="catey.active"
+    >
+      <ion-row>
+        <ion-col class="ion-text-center ion-text-wrap">
+          <h2>{{catey.name}}</h2>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <!-- Category Template End -->
+  </div>
+
+  <!-- Categories Container End -->
+
+  <!-- Products start -->
+
+  <div class="products">
+    <!-- product template start-->
+    <div class="product" *ngFor="let prod of products">
+      <img [src]="prod?.image" (click)="openProduct(prod.slug)" tappable />
+      <div>
+        <p>{{prod.title}}</p>
+        <ion-row>
+          <ion-col class="ion-no-padding" size="8">
+            <h3 *ngIf="!prod.has_offer">{{prod.price}}</h3>
+            <h3 *ngIf="prod.has_offer">
+              {{prod.offer_price}} <span class="offer">{{prod.price}}</span>
+            </h3>
+          </ion-col>
+          <ion-col class="ion-no-padding ion-text-right" size="4">
+            <ion-icon name="cart-outline" (click)="addToCart(prod)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <!-- product template end -->
+  </div>
+
+  <ion-infinite-scroll
+    (ionInfinite)="loadMoreProducts(productsMeta.links.next, $event)"
+  >
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

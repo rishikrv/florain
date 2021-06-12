@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-searchbar
+      [(ngModel)]="searchKey"
+      (ionChange)="search()"
+      placeholder="I'm shopping for ..."
+      style="margin-top: 4px;"
+      animated
+    ></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="onSearchChange()" translate>
+        <!-- <ion-icon slot="icon-only" name="search"></ion-icon> -->
+        SEARCH
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 *ngIf="!searchProducts" class="ion-text-center heading-2" translate>
+    SEARCH_EMPTY
+  </h2>
+  <h2 *ngIf="searchProducts?.length>0" class="heading-2" translate>
+    SEARCH_RESULTS_FOR <ion-text color="primary">{{searchKey}}</ion-text>
+  </h2>
+  <!-- Search Results Start -->
+
+  <!-- products containder Start -->
+  <div class="products">
+    <!-- product template start-->
+    <div class="product" *ngFor="let prod of searchProducts">
+      <img [src]="prod?.image" (click)="openProduct(prod.slug)" />
+      <div>
+        <p>{{prod.title}}</p>
+        <ion-row>
+          <ion-col class="ion-no-padding" size="6">
+            <h3>{{prod.price}}</h3>
+          </ion-col>
+          <ion-col class="ion-no-padding ion-text-right" size="6">
+            <ion-icon name="cart-outline" (click)="addToCart(prod)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <!-- product template end -->
+  </div>
+
+  <ion-infinite-scroll
+    (ionInfinite)="loadProducts(searchMeta.links.next, $event)"
+  >
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- Search Results End -->
+</ion-content>

@@ -1,0 +1,35 @@
+<ion-app>
+  <ion-router-outlet></ion-router-outlet>
+  
+  <ion-tabs >
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="home">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label translate>HOME</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="vendors">
+        <ion-icon name="business-outline"></ion-icon>
+        <ion-label translate>VENDORS</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="wishlist">
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-label translate>WISHLIST</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="cart">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-badge color="danger" mode="ios">{{ cartItemCount | async }}</ion-badge>
+        <ion-label translate>CART</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="account">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label translate>ACCOUNT</ion-label>
+      </ion-tab-button>
+      
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-app>

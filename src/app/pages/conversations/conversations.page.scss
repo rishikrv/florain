@@ -1,0 +1,16 @@
+ion-content {
+  --background: #f9f9f9;
+}
+
+ion-list {
+  background: transparent;
+
+  ion-item {
+    border-radius: 10px;
+    margin-top: 4px;
+    overflow: hidden;
+    h2 {
+      font-size: 0.9em;
+    }
+  }
+}

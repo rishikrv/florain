@@ -1,0 +1,397 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>CHECKOUT</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- new code -->
+
+  <div class="header">
+    <!-- Progressbar start -->
+    <div class="order-status-container">
+      <ul class="progressbar">
+        <li [ngClass]="progress > 0 ? 'active' : ''">
+          <span translate>SHIPPING</span>
+        </li>
+        <li [ngClass]="progress > 50 ? 'active' : ''">
+          <span translate>OPTIONS</span>
+        </li>
+        <li [ngClass]="progress > 100 ? 'active' : ''">
+          <span translate>PLACE_ORDER</span>
+        </li>
+        <!-- <li [ngClass]="progress >= 100 ? 'active' : ''">
+          <span>Pay</span>
+        </li> -->
+      </ul>
+    </div>
+    <!-- Progressbar End -->
+  </div>
+
+  <!-- Booking Slides Start -->
+
+  <ion-slides
+    #slideWithNav
+    id="slideWithNav"
+    (ionSlideDidChange)="onSlideChanged($event)"
+  >
+    <!-- Services Slide Start-->
+    <ion-slide *ngIf="progress >= 0">
+      <ion-grid class="shipping">
+        <ion-row>
+          <ion-col>
+            <h2 class="heading-1 ion-text-start" translate>
+              SELECT_SHIPPING_ADDRESS
+              <ion-text color="danger">*</ion-text>
+            </h2>
+
+            <ion-item lines="none" (click)="addAddress()">
+              <ion-button
+                class="small-button"
+                color="primary"
+                slot="start"
+                mode="ios"
+              >
+                <ion-icon slot="icon-only" name="add-outline"> </ion-icon>
+              </ion-button>
+              <ion-label>
+                <h2 translate>
+                  ADD_ADDRESS
+                </h2>
+              </ion-label>
+            </ion-item>
+
+            <div *ngIf="isAuthenticated.value">
+              <ion-radio-group
+                (ionChange)="selectAddress($event)"
+                *ngIf="!loading_addresses"
+              >
+                <ion-item
+                  lines="none"
+                  *ngFor="let address of addresses"
+                  mode="ios"
+                >
+                  <ion-label class="ion-text-wrap">
+                    <p>
+                      <ion-text color="primary"
+                        >{{address.address_type}}</ion-text
+                      >
+                    </p>
+                    <h2>{{address.address_title}}</h2>
+                    <h2>({{address.phone}})</h2>
+                    <p>
+                      {{address.address_line_1}}, {{address.address_line_2}}
+                    </p>
+                    <p>
+                      {{address.city}}, {{address.country.name}}
+                      {{address.zip_code}}
+                    </p>
+                  </ion-label>
+                  <ion-radio
+                    slot="start"
+                    mode="md"
+                    [value]="address"
+                  ></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+              <loading-list [loading]="loading_addresses"></loading-list>
+            </div>
+
+            <div *ngIf="!isAuthenticated.value && selectedGuestAddress">
+              <ion-radio-group value="dumy">
+                <ion-item lines="none" mode="ios">
+                  <ion-label class="ion-text-wrap">
+                    <p>
+                      <ion-text color="primary" translate>SHIPPING</ion-text>
+                    </p>
+                    <h2>
+                      {{selectedGuestAddress.address_title}}
+                    </h2>
+                    <h2>
+                      ({{selectedGuestAddress.phone}})
+                    </h2>
+                    <p>
+                      {{selectedGuestAddress.address_line_1}},
+                      {{selectedGuestAddress.address_line_2}}
+                    </p>
+                    <p>
+                      {{selectedGuestAddress.city}},
+                      {{selectedGuestAddress.country_name}}
+                      {{selectedGuestAddress.zip_code}}
+                    </p>
+                  </ion-label>
+                  <ion-radio
+                    slot="start"
+                    mode="md"
+                    checked="true"
+                    value="dumy"
+                  ></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <!-- Services Slide End-->
+
+    <!-- Time Slide Start -->
+
+    <ion-slide *ngIf="progress >= 50">
+      <ion-grid class="time">
+        <ion-row>
+          <ion-col class="ion-text-start">
+            <!-- SHIPPING SECTION STATRT -->
+            <div *ngIf="shipping_options.length>0">
+              <h2 class="heading-1" translate>
+                SHIPPING <ion-text color="danger">*</ion-text>
+              </h2>
+
+              <ion-radio-group
+                (ionChange)="onShippingOptionChange($event)"
+                *ngIf="!loading_addresses"
+              >
+                <ion-list lines="none">
+                  <ion-item mode="ios" *ngFor="let address of shipping_options">
+                    <ion-label>
+                      <h2 *ngIf="address.id">{{address.cost}}</h2>
+                      <h2 *ngIf="!address.id">Free</h2>
+                      <p>
+                        {{address.delivery_takes}}
+                      </p>
+                      <p>{{address.carrier_name}}</p>
+                    </ion-label>
+                    <ion-radio
+                      slot="start"
+                      mode="md"
+                      [value]="address"
+                    ></ion-radio>
+                  </ion-item>
+                </ion-list>
+              </ion-radio-group>
+
+              <loading-list [loading]="loading_addresses"> </loading-list>
+            </div>
+
+            <!-- PACKAGING SECTION START -->
+            <div *ngIf="packagingOps.length>0">
+              <h2 class="heading-1" translate>
+                PACKAGING <ion-text color="danger">*</ion-text>
+              </h2>
+
+              <ion-radio-group
+                (ionChange)="onPackagingOptionChange($event)"
+                *ngIf="!loading_packagingOps"
+              >
+                <ion-list lines="none">
+                  <ion-item mode="ios" *ngFor="let package of packagingOps">
+                    <ion-label>
+                      <h2 *ngIf="package.cost>0">
+                        {{package.cost | number : '1.2-2'}}
+                      </h2>
+                      <h2 *ngIf="package.cost <=0">Free</h2>
+                      <p class="value">{{package.name}}</p>
+                    </ion-label>
+
+                    <ion-radio
+                      slot="start"
+                      mode="md"
+                      [value]="package"
+                    ></ion-radio>
+                  </ion-item>
+                </ion-list>
+              </ion-radio-group>
+              <loading-list [loading]="loading_packagingOps"> </loading-list>
+            </div>
+
+            <!-- PAYMENT SECTION STRART -->
+
+            <div *ngIf="paymentOps.length > 0">
+              <h2 class="heading-1" translate>
+                PAYMENT <ion-text color="danger">*</ion-text>
+              </h2>
+
+              <ion-radio-group
+                (ionChange)="onPaymentOptionChange($event)"
+                *ngIf="!loading_paymentOps"
+              >
+                <ion-list lines="none">
+                  <ion-item mode="ios" *ngFor="let payment of paymentOps">
+                    <ion-label>
+                      <h2>{{payment.name}}</h2>
+                    </ion-label>
+
+                    <ion-radio
+                      slot="start"
+                      mode="md"
+                      [value]="payment"
+                    ></ion-radio>
+                  </ion-item>
+                </ion-list>
+              </ion-radio-group>
+              <loading-list [loading]="loading_paymentOps"> </loading-list>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <!-- Time Slide End -->
+
+    <!-- Checkout Slide Start -->
+
+    <ion-slide *ngIf="progress>= 100">
+      <ion-grid class="checkout">
+        <ion-row>
+          <ion-col class="ion-text-start">
+            <!-- cart item start -->
+            <ion-item
+              lines="none"
+              *ngFor="let item of order?.items"
+              class="order-items"
+            >
+              <ion-thumbnail class="small-thumb" slot="start">
+                <img [src]="item.image" />
+              </ion-thumbnail>
+              <ion-label>
+                <p class="ion-text-wrap">{{item.description}}</p>
+                <h2 class="price">
+                  {{item.unit_price}}
+                </h2>
+              </ion-label>
+              <p slot="end">x {{item.quantity}}</p>
+            </ion-item>
+            <!-- cart item end -->
+
+            <h2 class="heading-1" translate>ORDER_SUMMARY</h2>
+
+            <ion-list lines="none" class="ion-no-padding">
+              <ion-item>
+                <ion-label>
+                  <p translate>SUB_TOTAL</p>
+                </ion-label>
+
+                <p slot="end">{{order?.total}}</p>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p translate>DISCOUNT</p>
+                </ion-label>
+
+                <p slot="end">{{order?.discount}}</p>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <p translate>PACKAGING</p>
+                </ion-label>
+
+                <p slot="end">{{order?.packaging}}</p>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <p translate>SHIPPING</p>
+                </ion-label>
+
+                <p slot="end">{{order?.shipping}}</p>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <p translate>HANDLING</p>
+                </ion-label>
+
+                <p slot="end">{{order?.handling}}</p>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <p translate>TAXES</p>
+                </ion-label>
+
+                <p slot="end">{{order?.taxes}} ({{order?.taxrate}})</p>
+              </ion-item>
+            </ion-list>
+            <!-- order details end -->
+
+            <h2 class="heading-1" translate>APPLY_COUPON</h2>
+
+            <!-- order details start -->
+
+            <ion-item lines="none">
+              <ion-input [(ngModel)]="coupon" placeholder="Enter coupon code">
+              </ion-input>
+              <ion-button
+                *ngIf="coupon?.length>0"
+                slot="end"
+                fill="clear"
+                (click)="login()"
+                translate
+                >APPLY</ion-button
+              >
+            </ion-item>
+
+            <h2 class="heading-1" translate>BUYER_NOTE</h2>
+
+            <ion-item lines="none">
+              <ion-textarea [(ngModel)]="buyer_note" rows="4"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <!-- Checkout Slide End -->
+  </ion-slides>
+  <!-- Booking slides end -->
+
+  <!-- new code -->
+</ion-content>
+
+<ion-footer *ngIf="order" class="ion-no-border footer">
+  <ion-item lines="none">
+    <ion-label>
+      <h2 class="price">{{order?.grand_total}}</h2>
+      <p translate>GRAND_TOTAL</p>
+    </ion-label>
+
+    <ion-button
+      class="ion-margin-vertical"
+      shape="round"
+      expand="block"
+      (click)="confirmShipping()"
+      *ngIf="currentSlide == 0"
+      translate
+    >
+      NEXT
+      <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+    </ion-button>
+
+    <ion-button
+      class="ion-margin-vertical"
+      shape="round"
+      expand="block"
+      (click)="confirmOrderOptions() "
+      *ngIf="currentSlide == 1"
+      translate
+    >
+      NEXT
+      <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+    </ion-button>
+
+    <ion-button
+      *ngIf="currentSlide == 2"
+      slot="end"
+      color="primary"
+      fill="solid"
+      shape="round"
+      translate
+      (click)="placeOrder()"
+    >
+      CONFIRM_ORDER
+      <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

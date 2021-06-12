@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"
+        ><ion-icon slot="icon-only" name="close"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <ion-title translate>SHIPPING_ADDRESS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Basic Info Start -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h2 class="heading-1" translate>SHIP_TO</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-select
+          mode="ios"
+          placeholder="Select country"
+          [compareWith]="compareFn"
+          (ionChange)="selectCountry()"
+          [(ngModel)]="country_id"
+        >
+          <ion-select-option
+            *ngFor="let country of countries | keyvalue"
+            [value]="country"
+            >{{country.value}}</ion-select-option
+          >
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h2 class="heading-1" translate>SHIPPING_METHOD</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-radio-group [(ngModel)]="option">
+      <ion-row *ngFor="let option of options">
+        <ion-col>
+          <ion-item lines="none" (click)="save()">
+            <ion-radio [value]="option" slot="end"></ion-radio>
+            <span class="price" slot="start">{{option.cost}}</span>
+            <ion-label>
+              <h2><b>{{option.name}}</b></h2>
+              <p>via {{option.carrier_name}}</p>
+              <p>{{option.delivery_takes}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+  </ion-grid>
+
+  <!-- Basic Info End -->
+</ion-content>

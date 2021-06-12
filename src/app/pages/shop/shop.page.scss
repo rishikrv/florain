@@ -1,0 +1,110 @@
+ion-content {
+  --background: #f9f9f9;
+}
+
+ion-fab {
+  ion-button {
+    background: rgba(0, 0, 0, 0.199);
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+  }
+}
+
+.header {
+  //background: var(--ion-color-primary);
+  border-radius: 0px 0px 8px 8px;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    height: 100%;
+  }
+  .header-item {
+    h3 {
+      font-size: 0.8em;
+      font-weight: bold;
+      margin: 0px;
+    }
+    p {
+      margin: 0px;
+      font-size: 0.7em !important;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.seller_info {
+  ion-thumbnail {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  h3 {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 0px;
+  }
+  p {
+    margin: 0px;
+    font-size: 0.7em !important;
+  }
+  ion-button {
+    text-transform: capitalize;
+  }
+}
+
+.products {
+  column-count: 2;
+  column-gap: 6px;
+
+  margin-top: 16px;
+  padding: 0px 16px;
+
+  .product {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    display: block;
+    -webkit-column-break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    .offer {
+      font-size: 0.7em;
+      text-decoration: line-through;
+      color: var(--ion-color-medium);
+    }
+    div {
+      padding: 4px 8px 6px 8px;
+    }
+
+    img {
+      margin: 0px auto;
+      display: block;
+    }
+
+    p {
+      font-size: 0.9em;
+      margin: 0px 0px 4px 0px;
+      height: 2.2em;
+      line-height: 1.1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    h3 {
+      margin: 2px;
+      font-size: 0.9em;
+      color: rgb(255, 57, 57);
+      //font-weight: bold;
+    }
+
+    ion-icon {
+      padding: 4px;
+      border-radius: 50%;
+      background: rgb(250, 250, 250);
+      font-size: 1em;
+      color: var(--ion-color-dark);
+    }
+  }
+}

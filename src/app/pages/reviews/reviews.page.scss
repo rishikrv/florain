@@ -1,0 +1,53 @@
+ion-content {
+  --background: #f9f9f9;
+}
+
+ion-grid {
+  background: #fff;
+  border-radius: 10px;
+  margin: 8px 0px 8px 0px;
+}
+
+.reviews {
+  .rating {
+    font-weight: bold;
+    font-size: 2em;
+    color: var(--ion-color-medium);
+  }
+
+  ion-badge {
+    margin-left: 4px;
+    font-size: 0.7em;
+    font-weight: 300;
+  }
+
+  h3 {
+    font-weight: bold;
+    font-size: 0.7em;
+    margin: 0px;
+  }
+  h2 {
+    font-size: 1em;
+    margin: 0px;
+  }
+  p {
+    margin: 0px;
+    font-size: 0.6em;
+    color: var(--ion-color-medium);
+  }
+
+  ion-avatar {
+    height: 30px;
+    width: 30px;
+  }
+
+  ion-button {
+    font-size: 0.5em;
+  }
+  .text {
+    margin: 0px;
+    font-size: 0.7em;
+    padding: 0px 16px;
+    color: var(--ion-color-dark);
+  }
+}

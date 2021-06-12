@@ -1,0 +1,110 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>CART</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <h2 translate *ngIf="cartLists.length ==0" class="ion-text-center heading-1">
+    EMPTY_CART
+  </h2>
+
+  <!-- Cart Item Start -->
+  <ion-radio-group
+    (ionChange)="shopChange($event)"
+    [(ngModel)]="selectedItemIndex"
+  >
+    <div class="order" *ngFor="let cartList of cartLists; let i = index">
+      <ion-item class="seller_info" lines="none">
+        <ion-radio slot="start" [value]="i"></ion-radio>
+        <ion-label>
+          <h3>{{cartList.shop.name}}</h3>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-sliding *ngFor="let item of cartList.items; let j = index">
+        <!-- cart item start -->
+        <ion-item lines="none">
+          <ion-thumbnail
+            class="small-thumb"
+            slot="start"
+            (click)="openProduct(item.slug)"
+          >
+            <img [src]="item.image" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2 (click)="openProduct(item.slug)">{{item.description}}</h2>
+            <ion-row style="padding-top: 8px;">
+              <ion-col
+                size="6"
+                class="ion-align-self-center ion-no-padding"
+                (click)="openProduct(item.slug)"
+              >
+                <h2 class="price">{{item.unit_price}}</h2>
+              </ion-col>
+              <ion-col
+                size="6"
+                class="ion-align-self-center ion-no-padding ion-text-end"
+              >
+                <div class="buttons">
+                  <ion-button
+                    mode="ios"
+                    size="small"
+                    (click)="updateQuantity(i, j, cartList.id, item.id,'ad')"
+                  >
+                    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button mode="ios" size="small">
+                    {{item.quantity}}
+                  </ion-button>
+                  <ion-button
+                    mode="ios"
+                    class="ion-margin-end"
+                    size="small"
+                    (click)="updateQuantity(i, j, cartList.id, item.id, 'rm')"
+                  >
+                    <ion-icon name="remove-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+        <!-- cart item end -->
+
+        <ion-item-options side="end">
+          <ion-item-option
+            color="danger"
+            (click)="delete(item.id, cartList.id)"
+          >
+            <ion-icon slot="icon-only" name="trash"></ion-icon
+          ></ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item
+        lines="none"
+        *ngIf="selectedOrder && selectedOrder?.id== cartList.id"
+      >
+        <ion-label>
+          <h2 class="price">{{selectedOrder?.grand_total}}</h2>
+          <p translate>GRAND_TOTAL</p>
+        </ion-label>
+        <ion-button
+          slot="end"
+          color="primary"
+          fill="solid"
+          shape="round"
+          (click)="checkout()"
+          translate
+        >
+          CHECKOUT
+          <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+
+    <!-- Cart Item End -->
+  </ion-radio-group>
+</ion-content>

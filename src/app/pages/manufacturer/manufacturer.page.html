@@ -1,0 +1,66 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title translate>DETAILS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- header start -->
+  <div class="header" *ngIf="shop.cover_image">
+    <img [src]="shop.cover_image" />
+    <ion-row class="header-item">
+      <ion-col class="ion-no-padding">
+        <ion-item
+          class="seller_info"
+          lines="none"
+          (click)="presentModal()"
+          detail
+        >
+          <ion-thumbnail slot="start"
+            ><img [src]="shop?.image"
+          /></ion-thumbnail>
+          <ion-label>
+            <h3>
+              {{shop?.name}}
+              <ion-icon
+                *ngIf="shop?.verified"
+                name="checkmark-circle"
+              ></ion-icon>
+            </h3>
+            <p>{{shop?.origin}}</p>
+            <p>Available from: {{shop?.available_from}}</p>
+          </ion-label>
+
+          <!-- <ion-button slot="end" size="small" shape="round">Contact Seller</ion-button> -->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!-- header end -->
+
+  <div class="products">
+    <!-- product template start-->
+    <div class="product" *ngFor="let prod of shop?.listings">
+      <img [src]="prod?.image" (click)="openProduct(prod.slug)" tappable />
+      <div>
+        <p>{{prod.title}}</p>
+        <ion-row>
+          <ion-col class="ion-no-padding" size="8">
+            <h3 *ngIf="!prod.has_offer">{{prod.price}}</h3>
+            <h3 *ngIf="prod.has_offer">
+              {{prod.offer_price}} <span class="offer">{{prod.price}}</span>
+            </h3>
+          </ion-col>
+          <ion-col class="ion-no-padding ion-text-right" size="4">
+            <ion-icon name="cart-outline" (click)="addToCart(prod)"></ion-icon
+          ></ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <!-- product template end -->
+  </div>
+</ion-content>

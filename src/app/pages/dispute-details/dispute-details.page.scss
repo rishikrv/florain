@@ -1,0 +1,278 @@
+ion-content {
+  --background: #f9f9f9;
+}
+
+ion-button {
+  text-transform: capitalize;
+  font-size: 0.7em;
+  --border-width: 1px;
+}
+
+.header {
+  height: 3%;
+  background: var(--ion-color-primary);
+  border-radius: 0% 0% 34% 34%;
+}
+
+.order-status {
+  background: var(--ion-color-medium);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  h2 {
+    margin: 0px;
+    text-align: center;
+    font-size: 1em;
+    color: #fff;
+    font-weight: bold;
+    padding: 4px;
+  }
+}
+
+.order {
+  background: #fff;
+  border-radius: 12px 12px 12px 12px;
+  margin: 16px;
+  overflow: hidden;
+
+  ion-item {
+    margin-bottom: 8px;
+  }
+  .price {
+    font-size: 0.9em;
+    //color: rgb(255, 57, 57);
+    color: var(--ion-color-danger);
+  }
+
+  .price-label {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    margin-right: 40px;
+  }
+
+  .small-thumb {
+    border-radius: 8px;
+    overflow: hidden;
+    height: 50px;
+    width: 50px;
+  }
+
+  .seller_info {
+    ion-thumbnail {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    h3 {
+      font-size: 0.9em;
+      font-weight: bold;
+      margin: 0px;
+    }
+    p {
+      margin: 0px;
+      font-size: 0.7em !important;
+    }
+    ion-button {
+      text-transform: capitalize;
+    }
+
+    ion-button {
+      font-size: 0.6em;
+    }
+  }
+
+  p {
+    font-size: 0.9em;
+    color: var(--ion-color-dark);
+  }
+
+  .counter {
+    p {
+      margin: 0px;
+      text-align: center;
+      color: var(--ion-color-medium);
+      font-size: 0.9em;
+      ion-icon {
+        font-size: 1.6em;
+      }
+    }
+  }
+}
+
+ion-grid {
+  background: #fff;
+  border-radius: 12px 12px 12px 12px;
+  margin: 16px;
+  padding: 16px;
+  ion-col {
+    padding: 5px 0px 5px 0px;
+  }
+
+  ion-input {
+    --placeholder-color: var(--ion-color-medium);
+    --background: #f6f8f8;
+    border-radius: 10px;
+  }
+  p {
+    margin: 0px;
+    font-size: 0.8em;
+  }
+  .option {
+    color: var(--ion-color-medium);
+  }
+  .value {
+    color: var(--ion-color-dark);
+  }
+
+  .price {
+    font-weight: bold;
+    font-size: 1em;
+    //color: rgb(255, 57, 57);
+    color: var(--ion-color-danger);
+  }
+
+  .price-label {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    padding-top: 8px;
+  }
+}
+
+.footer-button {
+  position: fixed;
+  bottom: 10px;
+  width: 89%;
+
+  left: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  ion-col {
+    background: #fff;
+
+    color: #000;
+    p {
+      margin: 0px;
+    }
+    h3 {
+      margin: 0px;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .price {
+      font-size: 0.9em;
+      font-weight: bold;
+      color: var(--ion-color-danger);
+    }
+    .title {
+      font-size: 0.7em;
+      margin-right: 10px;
+      color: var(--ion-color-medium);
+    }
+    ion-icon {
+      font-size: 1.2em;
+    }
+  }
+
+  .left {
+    border-radius: 8px 0px 0px 8px;
+  }
+  .right {
+    border-radius: 0px 8px 8px 0px;
+    background: var(--ion-color-danger);
+    font-size: 0.8em;
+    padding: 4px;
+    font-weight: bold;
+    color: #fff;
+  }
+}
+
+.heading-1 {
+  padding: 30px 16px 8px 16px;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.bottom {
+  display: block;
+  height: 60px;
+}
+ion-textarea,
+ion-input,
+ion-select {
+  --placeholder-color: var(--ion-color-medium);
+  --background: #f6f8f8;
+  border-radius: 10px;
+  font-size: 0.9em;
+  background: #f6f8f8;
+}
+
+//progess bar code
+.order-status-container {
+  z-index: 3;
+  display: flex;
+  width: 100%;
+  height: 150px;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+}
+
+.progressbar {
+  counter-reset: step;
+  padding: 0;
+  float: left;
+}
+.progressbar {
+  counter-reset: step;
+}
+.progressbar li {
+  list-style-type: none;
+  width: 25%;
+  float: left;
+  font-size: 12px;
+  position: relative;
+  text-align: center;
+  color: var(--ion-color-primary);
+}
+.progressbar li:before {
+  width: 30px;
+  height: 30px;
+  content: counter(step);
+  counter-increment: step;
+  line-height: 30px;
+  border: 2px solid #e5e6e6;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  background-color: white;
+}
+.progressbar li:after {
+  width: 100%;
+  height: 2px;
+  content: "";
+  position: absolute;
+  background-color: #e5e6e6;
+  top: 15px;
+  left: -50%;
+  z-index: -1;
+}
+.progressbar li:first-child:after {
+  content: none;
+}
+.progressbar li.active {
+  color: #eae7e5;
+  span {
+    color: var(--ion-color-success);
+  }
+}
+.progressbar li.active:before {
+  border-color: #ffffff;
+  box-shadow: 0px 0px 4px #656464;
+  background: var(--ion-color-success);
+}
+.progressbar li.active + li:after {
+  background-color: var(--ion-color-success);
+}

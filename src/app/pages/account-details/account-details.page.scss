@@ -1,0 +1,49 @@
+ion-content {
+  --background: #f9f9f9;
+}
+
+ion-grid {
+  background: #fff;
+  border-radius: 12px;
+  margin: 16px;
+  padding: 16px;
+  ion-col {
+    padding: 5px 0px 5px 0px;
+  }
+  ion-textarea,
+  ion-input {
+    --placeholder-color: var(--ion-color-medium);
+    --background: #f6f8f8;
+    border-radius: 10px;
+    font-size: 0.9em;
+  }
+
+  p {
+    margin: 0px;
+    margin-bottom: 8px;
+    font-size: 0.8em;
+    color: var(--ion-color-medium);
+    b {
+      color: var(--ion-color-dark);
+    }
+  }
+  .option {
+    color: var(--ion-color-medium);
+  }
+  .value {
+    color: var(--ion-color-dark);
+  }
+
+  .price {
+    font-weight: bold;
+    font-size: 1em;
+    //color: rgb(255, 57, 57);
+    color: var(--ion-color-danger);
+  }
+
+  .price-label {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    padding-top: 8px;
+  }
+}

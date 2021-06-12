@@ -1,0 +1,151 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>DETAILS</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- Basic Info Start -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <p><b translate>BASIC_INFO</b></p>
+      </ion-col>
+      <ion-col class="ion-text-right">
+        <ion-button
+          mode="ios"
+          size="small"
+          shape="round"
+          (click)="updateBasicInfo()"
+          translate
+        >
+          UPDATE
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>FULLNAME</p>
+        <ion-input [(ngModel)]="accountDetails.name"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>NICKNAME</p>
+        <ion-input [(ngModel)]="accountDetails.nice_name"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>BIO</p>
+        <ion-textarea
+          rows="4"
+          [(ngModel)]="accountDetails.description"
+        ></ion-textarea>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Basic Info End -->
+
+  <!-- Change Password Start -->
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <p><b translate>CHANGE_PASSWORD</b></p>
+      </ion-col>
+      <ion-col class="ion-text-right">
+        <ion-button
+          mode="ios"
+          size="small"
+          shape="round"
+          (click)="matchPassword()"
+          translate
+        >
+          UPDATE
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>OLD_PASSWORD</p>
+        <ion-input
+          [(ngModel)]="password.current_password"
+          type="password"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>NEW_PASSWORD</p>
+        <ion-input [(ngModel)]="password.password" type="password"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>CONFIRM_PASSWORD</p>
+        <ion-input
+          [(ngModel)]="password.password_confirmation"
+          type="password"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Change Password End -->
+
+  <!-- Change Address start -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <p><b translate>ADDRESS</b></p>
+      </ion-col>
+      <ion-col class="ion-text-right">
+        <ion-button
+          mode="ios"
+          size="small"
+          shape="round"
+          (click)="addAddress()"
+          translate
+        >
+          NEW_ADDRESS
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let address of addresses">
+      <ion-col size="3">
+        <p class="option">{{address.address_type}}</p></ion-col
+      >
+      <ion-col size="7">
+        <p><b>{{address.address_title}} ({{address.phone}})</b></p>
+        <p class="value">
+          {{address.address_line_1}}, {{address.address_line_2}}
+        </p>
+        <p class="value">
+          {{address.city}}, {{address.country.name}} {{address.zip_code}}
+        </p>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button
+          fill="clear"
+          color="danger"
+          (click)="removeAddress(address)"
+        >
+          <ion-icon slot="icon-only" name="close"></ion-icon
+        ></ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Change address end -->
+</ion-content>

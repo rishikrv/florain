@@ -1,0 +1,224 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()" text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate>ORDER_EVALUATION</ion-title>
+    <ion-buttons slot="end">
+      <ion-button translate shape="round" (click)="submitFeedback()">
+        SUBMIT
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="shop && !shop.feedback">
+    <ion-row>
+      <ion-col>
+        <p><b translate>RATE_SELLER</b></p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item class="ion-no-padding" lines="none">
+          <ion-thumbnail class="small-thumb" slot="start">
+            <img [src]="shop?.image" />
+          </ion-thumbnail>
+          <ion-label>
+            <p class="ion-text-wrap">{{shop?.name}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="rating">
+          <ion-icon
+            color="medium"
+            *ngIf="!sellerStars[0]"
+            name="star-outline"
+            (click)="rateSeller(0)"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="sellerStars[0]"
+            name="star"
+            (click)="rateSeller(0)"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="sellerStars[1]"
+            name="star"
+            (click)="rateSeller(1)"
+          ></ion-icon>
+          <ion-icon
+            color="medium"
+            *ngIf="!sellerStars[1]"
+            name="star-outline"
+            (click)="rateSeller(1)"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="sellerStars[2]"
+            name="star"
+            (click)="rateSeller(2)"
+          ></ion-icon>
+          <ion-icon
+            color="medium"
+            *ngIf="!sellerStars[2]"
+            name="star-outline"
+            (click)="rateSeller(2)"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="sellerStars[3]"
+            name="star"
+            (click)="rateSeller(3)"
+          ></ion-icon>
+          <ion-icon
+            color="medium"
+            *ngIf="!sellerStars[3]"
+            name="star-outline"
+            (click)="rateSeller(3)"
+          ></ion-icon>
+          <ion-icon
+            color="medium"
+            *ngIf="!sellerStars[4]"
+            name="star-outline"
+            (click)="rateSeller(4)"
+          ></ion-icon>
+          <ion-icon
+            color="warning"
+            *ngIf="sellerStars[4]"
+            name="star"
+            (click)="rateSeller(4)"
+          ></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <p translate>WRITE_FEEDBACK</p>
+        <ion-textarea
+          rows="4"
+          placeholder="Write you feedback"
+          [(ngModel)]="seller.comment"
+        ></ion-textarea>
+
+        <ion-text *ngIf="seller?.comment?.length<10" color="danger"
+          >The comment must be at least 10 characters.</ion-text
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="order">
+    <ion-row>
+      <ion-col>
+        <p><b translate>RATE_PRODUCT</b></p>
+      </ion-col>
+    </ion-row>
+
+    <div *ngFor="let item of order.items; let i = index">
+      <ion-row *ngIf="!item.feedback">
+        <ion-col>
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-thumbnail class="small-thumb" slot="start">
+              <img [src]="item?.image" />
+            </ion-thumbnail>
+            <ion-label>
+              <p class="ion-text-wrap">{{item?.description}}</p>
+              <h2 class="price">
+                <b>{{item?.unit_price}}</b>
+                <ion-text color="medium">
+                  <small> x {{item?.quantity}}</small></ion-text
+                >
+              </h2>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!item.feedback">
+        <ion-col>
+          <div class="rating">
+            <ion-icon
+              color="medium"
+              *ngIf="!stars[i][0]"
+              name="star-outline"
+              (click)="fill(0,i)"
+            ></ion-icon>
+            <ion-icon
+              color="warning"
+              *ngIf="stars[i][0]"
+              name="star"
+              (click)="fill(0,i)"
+            ></ion-icon>
+            <ion-icon
+              color="warning"
+              *ngIf="stars[i][1]"
+              name="star"
+              (click)="fill(1, i)"
+            ></ion-icon>
+            <ion-icon
+              color="medium"
+              *ngIf="!stars[i][1]"
+              name="star-outline"
+              (click)="fill(1,i)"
+            ></ion-icon>
+            <ion-icon
+              color="warning"
+              *ngIf="stars[i][2]"
+              name="star"
+              (click)="fill(2, i)"
+            ></ion-icon>
+            <ion-icon
+              color="medium"
+              *ngIf="!stars[i][2]"
+              name="star-outline"
+              (click)="fill(2, i)"
+            ></ion-icon>
+            <ion-icon
+              color="warning"
+              *ngIf="stars[i][3]"
+              name="star"
+              (click)="fill(3, i)"
+            ></ion-icon>
+            <ion-icon
+              color="medium"
+              *ngIf="!stars[i][3]"
+              name="star-outline"
+              (click)="fill(3, i)"
+            ></ion-icon>
+            <ion-icon
+              color="medium"
+              *ngIf="!stars[i][4]"
+              name="star-outline"
+              (click)="fill(4, i)"
+            ></ion-icon>
+            <ion-icon
+              color="warning"
+              *ngIf="stars[i][4]"
+              name="star"
+              (click)="fill(4, i)"
+            ></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!item.feedback">
+        <ion-col>
+          <p translate>WRITE_FEEDBACK</p>
+          <ion-textarea
+            rows="4"
+            placeholder="Write you feedback"
+            [(ngModel)]="items[i].comment"
+          ></ion-textarea>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
