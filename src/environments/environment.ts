@@ -7,8 +7,19 @@ export const environment = {
 
   BASE_URL: "http://test.floraindustry.com/public/api/",
   IMG_URL: "http://test.floraindustry.com/public/",
+  firebaseConfig : {
+    apiKey: "AIzaSyBvRCU1a4Me26Exp8Kq0HCAkBYinpvevys",
+    authDomain: "flora-industry-98892.firebaseapp.com",
+    projectId: "flora-industry-98892",
+    storageBucket: "flora-industry-98892.appspot.com",
+    messagingSenderId: "670897737217",
+    appId: "1:670897737217:web:5548ea87584de0a1687a00",
+    measurementId: "G-CJS3BW4ME2"
+  }
 
 };
+
+
 
 export const api_urls = {
   login: "auth/login",

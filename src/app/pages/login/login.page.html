@@ -10,15 +10,29 @@
         </ion-col>
       </ion-row>
       <!-- Heading End-->
-
+      <!-- User Type Selection -->
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="3" class="ion-align-self-center ion-text-center">
+          <ion-button color="secondary" (click)="toggleLogin(1)">
+            <p>User</p>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="3" class="ion-align-self-center ion-text-center">
+          <ion-button color="secondary" (click)="toggleLogin(2)">
+            <p>Seller/Buyer</p>
+          </ion-button>
+        </ion-col>
+      </ion-row>
       <!-- Social buttons start -->
-      <ion-row class="ion-justify-content-center item-social-buttons">
-        <!-- <ion-col size="3" class="ion-align-self-center ion-text-center">
+      <!-- <ion-row class="ion-justify-content-center item-social-buttons"> -->
+      <!-- <ion-col size="3" class="ion-align-self-center ion-text-center">
           <ion-button color="dark">
             <ion-icon slot="icon-only" name="logo-apple"></ion-icon>
           </ion-button>
         </ion-col> -->
-        <ion-col size="3" class="ion-align-self-center ion-text-center">
+      <!-- <ion-col size="3" class="ion-align-self-center ion-text-center">
           <ion-button color="google" (click)="googleSignup()">
             <ion-icon slot="icon-only" name="logo-google"> </ion-icon>
           </ion-button>
@@ -28,28 +42,28 @@
             <ion-icon slot="icon-only" name="logo-facebook"> </ion-icon>
           </ion-button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- social buttons end -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-sub-heading">
+      <!-- <ion-row class="ion-justify-content-center item-sub-heading">
         <ion-col size="9" class="ion-text-center">
           <p translate>OR</p>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Heading End-->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-input">
+      <!-- <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p translate>EMAIL</p>
           <ion-input type="email" formControlName="email"></ion-input>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Input Item End -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-input">
+      <!-- <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p translate>PASSWORD</p>
           <ion-input
@@ -71,16 +85,16 @@
             </ion-button>
           </ion-input>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Input Item End -->
 
       <!-- Login Button Start -->
 
-      <ion-row class="ion-justify-content-center item-button">
-        <!-- <ion-col size="4.5" class="ion-align-self-center">
+      <!-- <ion-row class="ion-justify-content-center item-button"> -->
+      <!-- <ion-col size="4.5" class="ion-align-self-center">
         <p>Forgot Password?</p>
       </ion-col> -->
-        <ion-col size="9" class="ion-align-self-center ion-text-end">
+      <!-- <ion-col size="9" class="ion-align-self-center ion-text-end">
           <ion-button
             translate
             shape="round"
@@ -91,18 +105,18 @@
             LOGIN
           </ion-button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Login Button End -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-sub-heading">
+      <!-- <ion-row class="ion-justify-content-center item-sub-heading">
         <ion-col size="9" class="ion-text-center">
           <p translate>
             DONT_HAVE_ACCOUNT
             <span (click)="toggleLogin()" translate>SIGN_UP</span>
           </p>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Heading End-->
 
       <ion-row class="ion-justify-content-center item-sub-heading">
@@ -121,7 +135,7 @@
       </ion-row>
     </ion-grid>
   </form>
-  <form [formGroup]="userRegForm" *ngIf="!loginForm">
+  <form [formGroup]="userRegForm" *ngIf="LoginOtp">
     <ion-grid>
       <!-- Heading Start -->
       <!-- Input Item Start -->
@@ -135,18 +149,18 @@
       <!-- Input Item Start -->
       <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
-          <p translate>FULLNAME</p>
+          <p>Mobile Number</p>
           <ion-input
-            ype="text"
-            placeholder="Full Name"
-            formControlName="name"
+            ype="Number"
+            placeholder="Mobile Number"
+            formControlName="contact_number"
           ></ion-input>
         </ion-col>
       </ion-row>
       <!-- Input Item End -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-input">
+      <!-- <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p translate>EMAIL</p>
           <ion-input
@@ -155,11 +169,11 @@
             formControlName="email"
           ></ion-input>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Input Item End -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-input">
+      <!-- <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p translate>PASSWORD</p>
           <ion-input
@@ -184,11 +198,11 @@
               ></ion-icon> </ion-button
           ></ion-input>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Input Item End -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-input">
+      <!-- <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p translate>CONFIRM_PASSWORD</p>
           <ion-input
@@ -213,11 +227,11 @@
               ></ion-icon> </ion-button
           ></ion-input>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Input Item End -->
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-input">
+      <!-- <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9" class="ion-no-padding">
           <ion-item color="undefined" lines="none">
             <p translate>ACCEPT_MARKETING</p>
@@ -228,7 +242,7 @@
             ></ion-checkbox>
           </ion-item>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Input Item End -->
 
       <!-- Input Item Start -->
@@ -250,11 +264,11 @@
             shape="round"
             color="secondary"
             expand="block"
-            (click)="register()"
+            (click)="login_otp()"
             translate
           >
             <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
-            SIGN_UP
+            Log In
           </ion-button>
         </ion-col>
       </ion-row>
@@ -278,6 +292,220 @@
           </p>
         </ion-col>
       </ion-row>
+      <!-- Heading End-->
+
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <ion-button
+            translate
+            (click)="goBack()"
+            color="light"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            GO_BACK
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <!-- user or seller Registration Form -->
+  <form [formGroup]="RegForm" *ngIf="RegForm_Check">
+    
+    <ion-grid>
+      <!-- Heading Start -->
+      <!-- Input Item Start -->
+      
+      <!-- Heading End-->
+
+      <!-- Input Item Start -->
+      <div *ngIf="updateUser==1">
+        <ion-row class="ion-justify-content-center item-heading">
+          <ion-col size="9">
+            <h2>Customer Registration</h2>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center item-input">
+          <ion-col size="9">
+            <p>Name</p>
+            <ion-input
+              type="text"
+              placeholder="Name"
+              formControlName="name"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p translate>EMAIL</p>
+            <ion-input
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Phone Number</p>
+            <ion-input
+              type="text"
+              placeholder="Phone Number"
+              formControlName="number"
+              value={{contactNumber}}
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Address</p>
+            <ion-input
+              type="text"
+              placeholder="Address"
+              formControlName="address"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Date Of Birth</p>
+            <ion-input
+              type="Date"
+              placeholder="Date Of Birth"
+              formControlName="dob"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>House Name</p>
+            <ion-input
+              type="text"
+              placeholder="House Name"
+              formControlName="hName"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Road Name</p>
+            <ion-input
+              type="text"
+              placeholder="Road Name"
+              formControlName="rName"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>City</p>
+            <ion-input
+              type="text"
+              placeholder="City"
+              formControlName="City"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Pin Code</p>
+            <ion-input
+              type="Number"
+              placeholder="Pin Code"
+              formControlName="pinCode"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>LandMark</p>
+            <ion-input
+              type="text"
+              placeholder="LandMark"
+              formControlName="landMark"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="updateUser==2">
+        <ion-row class="ion-justify-content-center item-heading">
+          <ion-col size="9">
+            <h2>Seller/Buyer Registration</h2>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center item-input">
+          <ion-col size="9">
+            <p>Name</p>
+            <ion-input
+              type="text"
+              placeholder="Name"
+              formControlName="name"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Business Name</p>
+            <ion-input
+              type="text"
+              placeholder="Business Name"
+              formControlName="businessName"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Business type</p>
+            <ion-input
+              type="text"
+              placeholder="Business type"
+              formControlName="bType"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Email</p>
+            <ion-input
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Phone Number</p>
+            <ion-input
+              type="text"
+              placeholder="Phone Number"
+              formControlName="number"
+              value ={contactNumber}
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>Address</p>
+            <ion-input
+              type="text"
+              placeholder="Address"
+              formControlName="address"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>City</p>
+            <ion-input
+              type="text"
+              placeholder="City"
+              formControlName="city"
+            ></ion-input>
+          </ion-col>
+          <ion-col size="9">
+            <p>PinCode</p>
+            <ion-input
+              type="number"
+              placeholder="Pin Code"
+              formControlName="pCode"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+      </div>
+      
+      <!-- Input Item End -->
+
+      <!-- SignUp Button Start -->
+
+      <ion-row class="ion-justify-content-center item-button">
+        <ion-col size="9" class="ion-align-self-center ion-text-end">
+          <ion-button
+            shape="round"
+            color="secondary"
+            expand="block"
+            (click)="register_user()"
+            translate
+          >
+            <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+            SignUp
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- SignUp Button End -->
+
       <!-- Heading End-->
 
       <ion-row class="ion-justify-content-center item-sub-heading">
