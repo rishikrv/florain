@@ -268,7 +268,31 @@
             translate
           >
             <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
-            Log In
+            Click to Get OTP
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center item-input">
+        <ion-col size="9">
+          <p>OTP</p>
+          <ion-input
+            ype="Number"
+            placeholder="OTP"
+            (input)="takeOTP($event)"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center item-button">
+        <ion-col size="9" class="ion-align-self-center ion-text-end">
+          <ion-button
+            shape="round"
+            color="secondary"
+            expand="block"
+            (click)="verify_otp()"
+            translate
+          >
+            <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
+            Login
           </ion-button>
         </ion-col>
       </ion-row>
@@ -284,14 +308,14 @@
       </ion-row>
 
       <!-- Input Item Start -->
-      <ion-row class="ion-justify-content-center item-sub-heading">
+      <!-- <ion-row class="ion-justify-content-center item-sub-heading">
         <ion-col size="9" class="ion-text-center">
           <p translate>
             ALREADY_HAVE_ACCOUNT
             <span (click)="toggleLogin()" translate>LOGIN</span>
           </p>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- Heading End-->
 
       <ion-row class="ion-justify-content-center item-sub-heading">
@@ -313,11 +337,10 @@
 
   <!-- user or seller Registration Form -->
   <form [formGroup]="RegForm" *ngIf="RegForm_Check">
-    
     <ion-grid>
       <!-- Heading Start -->
       <!-- Input Item Start -->
-      
+
       <!-- Heading End-->
 
       <!-- Input Item Start -->
@@ -350,7 +373,7 @@
               type="text"
               placeholder="Phone Number"
               formControlName="number"
-              value={{contactNumber}}
+              value="{{contactNumber}}"
             ></ion-input>
           </ion-col>
           <ion-col size="9">
@@ -456,7 +479,7 @@
               type="text"
               placeholder="Phone Number"
               formControlName="number"
-              value ={contactNumber}
+              value="{contactNumber}"
             ></ion-input>
           </ion-col>
           <ion-col size="9">
@@ -485,7 +508,7 @@
           </ion-col>
         </ion-row>
       </div>
-      
+
       <!-- Input Item End -->
 
       <!-- SignUp Button Start -->

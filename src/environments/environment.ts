@@ -22,6 +22,8 @@ export const environment = {
 
 
 export const api_urls = {
+  verifyOTP:"auth/checkOTP",
+  otp : "auth/sendOTP",
   login: "auth/login",
   social: "auth/social/",
   signup: "auth/register",

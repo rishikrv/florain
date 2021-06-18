@@ -48,11 +48,33 @@ export class LoginPage implements OnInit {
   user = null;
   token = null;
   usertype: any;
-  
+
   updateUser: any;
-  userData: { email: any; name: any; phone: any; address: any; dob: any; houseName: any; roadName: any; city: any; pincode: any; landMark: any; };
-  Data: { name: any; businessName: any; email: string; phone: string; address: string; businessType: string; loginType: number; city: string; pincode: number; };
+  userData: {
+    email: any;
+    name: any;
+    phone: any;
+    address: any;
+    dob: any;
+    houseName: any;
+    roadName: any;
+    city: any;
+    pincode: any;
+    landMark: any;
+  };
+  Data: {
+    name: any;
+    businessName: any;
+    email: string;
+    phone: string;
+    address: string;
+    businessType: string;
+    loginType: number;
+    city: string;
+    pincode: number;
+  };
   contactNumber: any;
+  otp_value: any;
   constructor(
     private alertCtrl: AlertController,
     public formBuilder: FormBuilder,
@@ -403,15 +425,40 @@ export class LoginPage implements OnInit {
   goBack() {
     this.model.dismiss({ isAuthenticated: false });
   }
-  login_otp() {
+  async login_otp() {
     console.log(this.userRegForm.value);
     console.log(this.usertype);
     if (!this.userRegForm.valid) {
       this.utils.presentAlert("", "Invalid details");
     } else {
-      //
+      const data = {
+        phone: this.userRegForm.value.contact_number,
+        user_role: this.usertype,
+      };
       console.log("valid form");
-
+      try {
+        let resp = await this.api.post(api_urls.otp, data).toPromise();
+        if (resp.message == 1) {
+          this.utils.presentAlert("", "OTP Sent");
+        }
+      } catch (error) {
+        this.utils.presentAlert("", error);
+      }
+    }
+  }
+  takeOTP($event) {
+    this.otp_value = $event.target.value;
+  }
+  async verify_otp() {
+    const data = {
+      phone: this.userRegForm.value.contact_number,
+      OTP: this.otp_value,
+      user_role: this.usertype,
+    };
+    let resp = await this.api.post(api_urls.verifyOTP, data).toPromise();
+    if (resp.message == "OTP is incorrect!") {
+      this.utils.presentAlert("", "OTP is incorrect!");
+    } else {
       this.otp();
     }
   }
@@ -444,43 +491,42 @@ export class LoginPage implements OnInit {
         this.loginForm = false;
         this.LoginOtp = false;
         this.updateUser = this.usertype;
-        this.contactNumber = this.userRegForm.value.contact_number
+        this.contactNumber = this.userRegForm.value.contact_number;
       }
     }
   }
   register_user() {
-    if(this.updateUser==1){
-      this.userData ={
-        "email":this.RegForm.value.email,
-        "name" : this.RegForm.value.name,
-        "phone":this.RegForm.value.number,
-        "address":this.RegForm.value.address,
-        "dob" :this.RegForm.value.dob,
-        "houseName" : this.RegForm.value.hName,
-        "roadName": this.RegForm.value.rName,
-        "city" :this.RegForm.value.City,
-        "pincode" :this.RegForm.value.pinCode,
-        "landMark":this.RegForm.value.landMark
-      }
+    if (this.updateUser == 1) {
+      this.userData = {
+        email: this.RegForm.value.email,
+        name: this.RegForm.value.name,
+        phone: this.RegForm.value.number,
+        address: this.RegForm.value.address,
+        dob: this.RegForm.value.dob,
+        houseName: this.RegForm.value.hName,
+        roadName: this.RegForm.value.rName,
+        city: this.RegForm.value.City,
+        pincode: this.RegForm.value.pinCode,
+        landMark: this.RegForm.value.landMark,
+      };
       this.UserRegister(this.userData);
-    }
-    else{
-      this.Data ={
-        "name" :this.RegForm.value.name,
-        "businessName" :this.RegForm.value.businessName,
-        "email":this.RegForm.value.email,
-        "phone" :this.RegForm.value.number,
-        "address":this.RegForm.value.address,
-        "businessType" : this.RegForm.value.bType,
-        "loginType" : 2,
-        "city" : this.RegForm.value.city,
-        "pincode" :this.RegForm.value.pCode
-      }
+    } else {
+      this.Data = {
+        name: this.RegForm.value.name,
+        businessName: this.RegForm.value.businessName,
+        email: this.RegForm.value.email,
+        phone: this.RegForm.value.number,
+        address: this.RegForm.value.address,
+        businessType: this.RegForm.value.bType,
+        loginType: 2,
+        city: this.RegForm.value.city,
+        pincode: this.RegForm.value.pCode,
+      };
       this.UserRegister(this.Data);
     }
   }
-  async UserRegister(data){
-    console.log(data)
+  async UserRegister(data) {
+    console.log(data);
     this.utils.presentLoading("Please wait");
     try {
       let resp = await this.api.post(api_urls.signup, data).toPromise();
