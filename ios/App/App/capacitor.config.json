@@ -1,6 +1,6 @@
 {
-  "appId": "com.incevio.zcart",
-  "appName": "Zcart",
+  "appId": "com.flora.industry",
+  "appName": "Flora",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

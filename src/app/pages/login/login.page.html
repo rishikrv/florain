@@ -12,14 +12,14 @@
       <!-- Heading End-->
       <!-- User Type Selection -->
       <ion-row class="ion-justify-content-center">
-        <ion-col size="3" class="ion-align-self-center ion-text-center">
+        <ion-col size="4" class="ion-align-self-center ion-text-center">
           <ion-button color="secondary" (click)="toggleLogin(1)">
             <p>User</p>
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="3" class="ion-align-self-center ion-text-center">
+        <ion-col size="5" class="ion-align-self-center ion-text-center">
           <ion-button color="secondary" (click)="toggleLogin(2)">
             <p>Seller/Buyer</p>
           </ion-button>
@@ -141,7 +141,7 @@
       <!-- Input Item Start -->
       <ion-row class="ion-justify-content-center item-heading">
         <ion-col size="9">
-          <h2 translate>SIGN_UP</h2>
+          <h2 translate>Sign In</h2>
         </ion-col>
       </ion-row>
       <!-- Heading End-->
@@ -259,7 +259,7 @@
       <!-- SignUp Button Start -->
 
       <ion-row class="ion-justify-content-center item-button">
-        <ion-col size="9" class="ion-align-self-center ion-text-end">
+        <ion-col size="5" class="ion-align-self-center ion-text-end">
           <ion-button
             shape="round"
             color="secondary"
@@ -268,10 +268,58 @@
             translate
           >
             <ion-icon name="caret-forward-outline" slot="end"></ion-icon>
-            Click to Get OTP
+            Get OTP
           </ion-button>
         </ion-col>
       </ion-row>
+
+      <ion-row class="ion-justify-content-center item-button">
+        <ion-col size="9" class="ion-align-self-center ion-text-center">
+          <p translate>
+            SIGNUP_AGREEMENT
+            <span translate>TERMS_OF_SERVICE</span>
+          </p>
+        </ion-col>
+      </ion-row>
+
+      <!-- Input Item Start -->
+      <!-- <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <p translate>
+            ALREADY_HAVE_ACCOUNT
+            <span (click)="toggleLogin()" translate>LOGIN</span>
+          </p>
+        </ion-col>
+      </ion-row> -->
+      <!-- Heading End-->
+
+      <ion-row class="ion-justify-content-center item-sub-heading">
+        <ion-col size="9" class="ion-text-center">
+          <ion-button
+            translate
+            (click)="goBack()"
+            color="dark"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            GO_BACK
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </form>
+
+    <form [formGroup]="userRegForm" *ngIf="LoginOtpSend">
+
+    <ion-grid>
+        <!-- Input Item Start -->
+        <ion-row class="ion-justify-content-center item-heading">
+          <ion-col size="9">
+            <h2 translate>Please enter OTP</h2>
+          </ion-col>
+        </ion-row>
+        <!-- Heading End-->
       <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p>OTP</p>
@@ -283,7 +331,7 @@
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center item-button">
-        <ion-col size="9" class="ion-align-self-center ion-text-end">
+        <ion-col size="5" class="ion-align-self-center ion-text-end">
           <ion-button
             shape="round"
             color="secondary"
@@ -323,7 +371,7 @@
           <ion-button
             translate
             (click)="goBack()"
-            color="light"
+            color="dark"
             fill="clear"
             shape="round"
           >
@@ -334,6 +382,19 @@
       </ion-row>
     </ion-grid>
   </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <!-- user or seller Registration Form -->
   <form [formGroup]="RegForm" *ngIf="RegForm_Check">

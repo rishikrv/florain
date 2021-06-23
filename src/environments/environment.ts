@@ -5,8 +5,8 @@
 export const environment = {
   production: true,
 
-  BASE_URL: "http://test.floraindustry.com/public/api/",
-  IMG_URL: "http://test.floraindustry.com/public/",
+  BASE_URL: "https://floraindustry.com/api/",
+  IMG_URL: "https://floraindustry.com/",
   firebaseConfig : {
     apiKey: "AIzaSyBvRCU1a4Me26Exp8Kq0HCAkBYinpvevys",
     authDomain: "flora-industry-98892.firebaseapp.com",

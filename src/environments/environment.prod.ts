@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  BASE_URL: "http://test.floraindustry.com/public/api/",
-  IMG_URL: "http://test.floraindustry.com/public/",
+  BASE_URL: "https://floraindustry.com/api/",
+  IMG_URL: "https://floraindustry.com/",
 };
 
 export const api_urls = {

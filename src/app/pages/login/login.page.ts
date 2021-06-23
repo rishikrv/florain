@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
   loginForm = true;
   RegForm_Check = false;
   LoginOtp = false;
+  LoginOtpSend = false;
   showPassword: boolean;
   showPassword1: boolean;
 
@@ -309,6 +310,7 @@ export class LoginPage implements OnInit {
       this.loginForm = false;
       this.usertype = id;
       this.LoginOtp = true;
+      this.LoginOtpSend = false;
       console.log(this.usertype);
     } else {
       this.loginForm = true;
@@ -438,8 +440,11 @@ export class LoginPage implements OnInit {
       console.log("valid form");
       try {
         let resp = await this.api.post(api_urls.otp, data).toPromise();
-        if (resp.message == 1) {
-          this.utils.presentAlert("", "OTP Sent");
+        if (resp.message.response == 1) {
+          // this.utils.presentAlert("", "OTP Sent");
+                this.utils.presentToast("OTP Sent");
+          this.LoginOtp = false;
+      this.LoginOtpSend = true;
         }
       } catch (error) {
         this.utils.presentAlert("", error);
@@ -490,6 +495,7 @@ export class LoginPage implements OnInit {
         this.RegForm_Check = true;
         this.loginForm = false;
         this.LoginOtp = false;
+      this.LoginOtpSend = false;
         this.updateUser = this.usertype;
         this.contactNumber = this.userRegForm.value.contact_number;
       }

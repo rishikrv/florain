@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.flora.industry" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name short="zCart">Flora Industry</name>
+    <name short="Flora Industry">Flora Industry</name>
     <description>An awesome multi-vendor marketplace application</description>
-    <author email="help@floraindustry.com" href="http://floraindustry.com/">Flora Team</author>
+    <author email="support@floraindustry.com" href="http://floraindustry.com/">Flora Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

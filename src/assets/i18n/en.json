@@ -1,5 +1,5 @@
 {
-  "WELCOME": "Welcome to zCart",
+  "WELCOME": "Welcome to Flora",
   "ACCOUNT": "Account",
   "DETAILS": "Details",
   "ADD_ADDRESS": "Add Address",
@@ -90,7 +90,7 @@
   "RETURN_GOODS_MESSAGE": "If the seller accepts your proposal, you will be asked to return the item(s) you received and provide a return tracking number.",
   "DISPUTE_DETAILS": "Dispute details",
   "SELLER_HELP": "Seller Help",
-  "ZCART_STEPSIN": "zCart Steps In ",
+  "ZCART_STEPSIN": "Flora Steps In ",
   "DISPUTE_FINISHED": "Dispute Finished",
   "REASON": "Reason",
   "UPDATED_AT": "Updated at",
