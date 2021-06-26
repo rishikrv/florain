@@ -52,6 +52,9 @@ export class AccountPage implements OnInit {
     if (this.isAuthenticated === true) {
       this.loadDashboard();
     }
+    else{
+      this.login();
+    }
   }
 
   async loadDashboard() {
@@ -66,7 +69,7 @@ export class AccountPage implements OnInit {
     } catch (error) {
       console.log(error);
       this.utils.dismissLoading();
-      this.utils.presentToast(error.error.messagge);
+      this.utils.presentToast(error.error.mesSsagge);
     }
   }
 

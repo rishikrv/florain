@@ -308,18 +308,17 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    </form>
+  </form>
 
-    <form [formGroup]="userRegForm" *ngIf="LoginOtpSend">
-
+  <form [formGroup]="userRegForm" *ngIf="LoginOtpSend">
     <ion-grid>
-        <!-- Input Item Start -->
-        <ion-row class="ion-justify-content-center item-heading">
-          <ion-col size="9">
-            <h2 translate>Please enter OTP</h2>
-          </ion-col>
-        </ion-row>
-        <!-- Heading End-->
+      <!-- Input Item Start -->
+      <ion-row class="ion-justify-content-center item-heading">
+        <ion-col size="9">
+          <h2 translate>Please enter OTP</h2>
+        </ion-col>
+      </ion-row>
+      <!-- Heading End-->
       <ion-row class="ion-justify-content-center item-input">
         <ion-col size="9">
           <p>OTP</p>
@@ -382,19 +381,6 @@
       </ion-row>
     </ion-grid>
   </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   <!-- user or seller Registration Form -->
   <form [formGroup]="RegForm" *ngIf="RegForm_Check">
@@ -495,6 +481,7 @@
           </ion-col>
         </ion-row>
       </div>
+
       <div *ngIf="updateUser==2">
         <ion-row class="ion-justify-content-center item-heading">
           <ion-col size="9">
@@ -503,7 +490,7 @@
         </ion-row>
         <ion-row class="ion-justify-content-center item-input">
           <ion-col size="9">
-            <p>Name</p>
+            <p>Owner Name</p>
             <ion-input
               type="text"
               placeholder="Name"
@@ -520,12 +507,26 @@
           </ion-col>
           <ion-col size="9">
             <p>Business type</p>
-            <ion-input
-              type="text"
-              placeholder="Business type"
-              formControlName="bType"
-            ></ion-input>
+
+            <ion-select mode="ios" interface="popover" formControlName="bType">
+              <ion-select-option value="Manufaturer" translate
+                >Manufaturer</ion-select-option
+              >
+              <ion-select-option value="Distributer" translate
+                >Distributer</ion-select-option
+              >
+              <ion-select-option value="Wholeseller" translate
+                >Wholeseller</ion-select-option
+              >
+              <ion-select-option value="Retailer" translate
+                >Retailer</ion-select-option
+              >
+              <ion-select-option value="Brand" translate
+                >Brand</ion-select-option
+              >
+            </ion-select>
           </ion-col>
+
           <ion-col size="9">
             <p>Email</p>
             <ion-input
@@ -556,7 +557,7 @@
             <ion-input
               type="text"
               placeholder="City"
-              formControlName="city"
+              formControlName="City"
             ></ion-input>
           </ion-col>
           <ion-col size="9">
@@ -564,8 +565,22 @@
             <ion-input
               type="number"
               placeholder="Pin Code"
-              formControlName="pCode"
+              formControlName="pinCode"
             ></ion-input>
+          </ion-col>
+
+          <ion-col size="9">
+            <ion-radio-group [value]="usert_type" formControlName="usertype1">
+              <ion-item>
+                <ion-label>Buyer</ion-label>
+                <ion-radio value=4></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Seller</ion-label>
+                <ion-radio value=3></ion-radio>
+              </ion-item>
+            </ion-radio-group>
           </ion-col>
         </ion-row>
       </div>

@@ -27,6 +27,7 @@ export const api_urls = {
   login: "auth/login",
   social: "auth/social/",
   signup: "auth/register",
+  singupSeller:"auth/registerUser",
   logout: "auth/logout",
   dashboard: "dashboard",
   my_acc: "account/update",

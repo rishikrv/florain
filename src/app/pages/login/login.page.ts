@@ -49,6 +49,7 @@ export class LoginPage implements OnInit {
   user = null;
   token = null;
   usertype: any;
+  usertype1:number;
 
   updateUser: any;
   userData: {
@@ -65,7 +66,7 @@ export class LoginPage implements OnInit {
   };
   Data: {
     name: any;
-    businessName: any;
+    shop_name : any;
     email: string;
     phone: string;
     address: string;
@@ -109,6 +110,8 @@ export class LoginPage implements OnInit {
       landMark: ["", Validators.required],
       businessName: ["", Validators.required],
       bType: ["", Validators.required],
+      usertype1:["",Validators.required]
+      
     });
 
     let EMAILPATTERN =
@@ -440,14 +443,14 @@ export class LoginPage implements OnInit {
       console.log("valid form");
       try {
         let resp = await this.api.post(api_urls.otp, data).toPromise();
-        if (resp.message.response == 1) {
+        if (resp.message != null) {
           // this.utils.presentAlert("", "OTP Sent");
-                this.utils.presentToast("OTP Sent");
+          this.utils.presentToast("OTP Sent");
           this.LoginOtp = false;
-      this.LoginOtpSend = true;
+          this.LoginOtpSend = true;
         }
       } catch (error) {
-        this.utils.presentAlert("", error);
+        this.utils.presentAlert("", error.error.message);
       }
     }
   }
@@ -461,24 +464,26 @@ export class LoginPage implements OnInit {
       user_role: this.usertype,
     };
     let resp = await this.api.post(api_urls.verifyOTP, data).toPromise();
-    if (resp.message == "OTP is incorrect!") {
+    if (resp.response == 1) {
+      this.otp();
+    } else if (resp.response == 0) {
       this.utils.presentAlert("", "OTP is incorrect!");
     } else {
-      this.otp();
+      this.utils.presentAlert("", "Something Went Wrong");
     }
   }
   async otp() {
     const data = {
       phone: this.userRegForm.value.contact_number,
-      user_role: this.usertype,
+      user_role: 1,
     };
-    this.utils.presentLoading("Please wait");
+    // this.utils.presentLoading("Please wait");
 
     try {
       let resp = await this.api.post(api_urls.login, data).toPromise();
       console.log(resp);
 
-      this.utils.dismissLoading();
+      // this.utils.dismissLoading();
       if (resp.data) {
         //remember user login data for future use
         this.api.token = resp.data.api_token;
@@ -490,14 +495,16 @@ export class LoginPage implements OnInit {
         this.utils.presentAlert("hello", resp.message);
       }
     } catch (error) {
-      this.utils.dismissLoading();
+      // this.utils.dismissLoading();
       if (error.status == 401) {
         this.RegForm_Check = true;
         this.loginForm = false;
         this.LoginOtp = false;
-      this.LoginOtpSend = false;
+        this.LoginOtpSend = false;
         this.updateUser = this.usertype;
         this.contactNumber = this.userRegForm.value.contact_number;
+      } else {
+        this.utils.presentAlert("hello", error.error.message);
       }
     }
   }
@@ -519,16 +526,17 @@ export class LoginPage implements OnInit {
     } else {
       this.Data = {
         name: this.RegForm.value.name,
-        businessName: this.RegForm.value.businessName,
+        shop_name : this.RegForm.value.businessName,
         email: this.RegForm.value.email,
         phone: this.RegForm.value.number,
         address: this.RegForm.value.address,
         businessType: this.RegForm.value.bType,
-        loginType: 2,
-        city: this.RegForm.value.city,
-        pincode: this.RegForm.value.pCode,
+        loginType: Number(this.RegForm.value.usertype1),
+        city: this.RegForm.value.City,
+        pincode: this.RegForm.value.pinCode,
       };
-      this.UserRegister(this.Data);
+      console.log(this.Data)
+      this.UserSeller(this.Data);
     }
   }
   async UserRegister(data) {
@@ -536,6 +544,29 @@ export class LoginPage implements OnInit {
     this.utils.presentLoading("Please wait");
     try {
       let resp = await this.api.post(api_urls.signup, data).toPromise();
+      console.log(resp);
+
+      this.utils.dismissLoading();
+      if (resp.data) {
+        //remember user login data for future use
+        this.api.token = resp.data.api_token;
+        this.appData.setValue("isAuthenticated", true);
+        this.appData.setValue("currentUser", JSON.stringify(resp.data));
+        this.appData.isAuthenticated.next(true);
+        this.model.dismiss({ isAuthenticated: true });
+      } else {
+        this.utils.presentAlert("hello", resp.message);
+      }
+    } catch (error) {
+      this.utils.dismissLoading();
+      this.utils.presentAlert("hello", error.error.message);
+    }
+  }
+  async UserSeller(data) {
+    console.log(data);
+    this.utils.presentLoading("Please wait");
+    try {
+      let resp = await this.api.post(api_urls.singupSeller, data).toPromise();
       console.log(resp);
 
       this.utils.dismissLoading();
