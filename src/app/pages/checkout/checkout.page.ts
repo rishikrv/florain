@@ -369,15 +369,16 @@ export class CheckoutPage implements OnInit {
    * Confirms place order
    */
   async placeOrder() {
+    const price = this.order.grand_total.split(" ");
     if (this.selectedPayment.code == "razor_pay") {
       var options = {
-        description: "Credits towards consultation",
+        description: "Flora ",
         image: "https://i.imgur.com/3g7nmJC.png",
         order_id: "order_DBJOWzybf0sJbb",
         currency: "INR",
         key: "rzp_test_uVQ5Z3p8wY2xkf",
-        amount: this.order.id.grand_total,
-        name: "Acme Corp",
+        amount: price[1],
+        name: "Flora",
         theme: {
           color: "#3399cc",
         },
