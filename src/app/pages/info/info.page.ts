@@ -12,6 +12,7 @@ export class InfoPage implements OnInit {
 
   page:any
   info:any;
+  doc: Document;
 
   constructor(private utils: UtilsService, 
     private api: ApiService,
@@ -34,6 +35,7 @@ export class InfoPage implements OnInit {
       console.log(res);
 
       this.info= res.data;
+      this.doc = new DOMParser().parseFromString(this.info.content, "text/xml")
       
      this.utils.dismissLoading();
     } catch (error) {

@@ -7,13 +7,15 @@ import { UtilsService } from "src/app/services/utils.service";
 import { CartService } from "src/app/services/cart.service";
 import { AppDataService } from "src/app/services/app-data.service";
 import { Network } from "@ionic-native/network/ngx";
-
+import { BehaviorSubject } from "rxjs";
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
   styleUrls: ["./home.page.scss"],
 })
 export class HomePage implements OnInit {
+  authenticationStatus: BehaviorSubject<boolean>;
+  isAuthenticated: boolean;
   slideOpts = {
     effect: "flip",
     speed: 1000,
@@ -53,7 +55,8 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private cart: CartService,
     private appData: AppDataService,
-    private network: Network
+    private network: Network,
+    private data: AppDataService
   ) {
     this.hasNetwork = true;
     console.log(window.location.pathname);
@@ -63,6 +66,11 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.authenticationStatus = this.data.isAuthenticated;
+    this.isAuthenticated = this.authenticationStatus.value;
+    this.authenticationStatus.subscribe((status) => {
+      this.isAuthenticated = status;
+    });
     if (this.network.type == this.network.Connection.NONE) {
       this.hasNetwork = false;
       this.utils.presentToast(
@@ -122,37 +130,37 @@ export class HomePage implements OnInit {
     this.router.navigate(["/product"], { queryParams: { slug: slug } });
   }
 
-
   // slider click event
-  sliderClickEvent(link) {   
-
-    if(link){
+  sliderClickEvent(link) {
+    if (link) {
       var res = link.split("/");
 
-      if (res[1]){
-        if(res[1] == "category"){ 
-          if(res[2]){
-            this.router.navigateByUrl('list/' + res[2]);
+      if (res[1]) {
+        if (res[1] == "category") {
+          if (res[2]) {
+            this.router.navigateByUrl("list/" + res[2]);
           }
-        } else if (res[1] == "product"){
-          if(res[2]){
-            this.router.navigate(["/product"], { queryParams: { slug: res[2] } });
+        } else if (res[1] == "product") {
+          if (res[2]) {
+            this.router.navigate(["/product"], {
+              queryParams: { slug: res[2] },
+            });
           }
-        } else if (res[1] == "categorygrp"){
-          if(res[2]){
+        } else if (res[1] == "categorygrp") {
+          if (res[2]) {
             this.categorySlug = this.categories.filter(
               (item) => item.slug === res[2]
             );
-    
-            this.appData.category = this.categorySlug[0]
+
+            this.appData.category = this.categorySlug[0];
             this.nav.navigateForward(["category"]);
           }
-        } else if (res[1] == "page"){
-          if(res[2]){
+        } else if (res[1] == "page") {
+          if (res[2]) {
             this.nav.navigateForward([res[2]]);
           }
         } else {
-          console.log('false');
+          console.log("false");
         }
       }
     }
@@ -160,50 +168,51 @@ export class HomePage implements OnInit {
   // slider click event end
 
   //banner click event
-  openLinkBanner(link){
+  openLinkBanner(link) {
     // console.log(link);
-    if(link){
+    if (link) {
       var res = link.split("/");
       // console.log(res);
-      if (res[3]){
-        if(res[3] == "category"){           
-          if(res[4]){
-            this.router.navigateByUrl('list/' + res[4]);
+      if (res[3]) {
+        if (res[3] == "category") {
+          if (res[4]) {
+            this.router.navigateByUrl("list/" + res[4]);
           }
-        } else if (res[3] == "product"){
-          if(res[4]){
-            this.router.navigate(["/product"], { queryParams: { slug: res[4] } });
+        } else if (res[3] == "product") {
+          if (res[4]) {
+            this.router.navigate(["/product"], {
+              queryParams: { slug: res[4] },
+            });
           }
-        } else if (res[3] == "categorygrp"){
-          if(res[4]){
+        } else if (res[3] == "categorygrp") {
+          if (res[4]) {
             this.categorySlug = this.categories.filter(
               (item) => item.slug === res[4]
             );
-    
-            this.appData.category = this.categorySlug[0]
+
+            this.appData.category = this.categorySlug[0];
             this.nav.navigateForward(["category"]);
           }
-        } else if (res[4] == "page"){
-          if(res[4]){
+        } else if (res[4] == "page") {
+          if (res[4]) {
             this.nav.navigateForward([res[4]]);
           }
         } else {
-          console.log('false');
+          console.log("false");
         }
       }
     }
   }
 
   async loadData() {
-    console.log('device is: ', this.appData.playerID);
-    
+    console.log("device is: ", this.appData.playerID);
+
     try {
       this.utils.presentLoading("Please wait");
       this.mainSlides = (await this.api.get(api_urls.sliders).toPromise())[
         "data"
       ];
-      
-      
+
       this.categories = (await this.api.get(api_urls.grps).toPromise())["data"];
       let tempBanners = (await this.api.get(api_urls.banners).toPromise())[
         "data"
@@ -214,7 +223,7 @@ export class HomePage implements OnInit {
         (item) => item.group_id === "group_1"
       );
       console.log(this.banners[0]);
-      
+
       this.banners[1] = tempBanners.filter(
         (item) => item.group_id === "group_2"
       );
@@ -265,7 +274,7 @@ export class HomePage implements OnInit {
     this.appData.setData("categories", this.categories);
     // this.nav.navigateForward(["categories"]);
     this.utils.presentLoading("Please wait");
-    this.router.navigateByUrl('/categories');
+    this.router.navigateByUrl("/categories");
   }
 
   async doRefresh(event) {
@@ -347,5 +356,8 @@ export class HomePage implements OnInit {
 
     console.log(data);
     this.cart.addToCart(product.slug, data);
+  }
+  redirect(){
+    this.router.navigate(['/account']);
   }
 }

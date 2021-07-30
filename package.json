@@ -66,7 +66,9 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "com.razorpay.cordova": "git+https://github.com/razorpay/razorpay-cordova.git",
     "cordova-android": "^9.1.0",
+    "cordova-browser": "^6.0.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-googleplus": "git+https://github.com/EddyVerbruggen/cordova-plugin-googleplus.git",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
@@ -111,10 +113,12 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-telerik-imagepicker": {},
       "cordova-plugin-media-capture": {},
-      "onesignal-cordova-plugin": {}
+      "onesignal-cordova-plugin": {},
+      "com.razorpay.cordova": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }

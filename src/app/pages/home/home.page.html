@@ -11,7 +11,7 @@
 
     <ion-searchbar
       placeholder="I'm shopping for ..."
-      style="margin-top: 16px;"
+      style="margin-top: 16px"
       animated
       mode="ios"
       (click)="openSearch()"
@@ -36,9 +36,17 @@
 
   <!-- slider -->
   <ion-slides
-    *ngIf="mainSlides.length > 0" class="slider" pager="true"
-    [options]="slideOpts" #slider (ionSlidesDidLoad)="slidesDidLoad1(slider)">
-    <ion-slide *ngFor="let slide of mainSlides" (click)="sliderClickEvent(slide.link)">
+    *ngIf="mainSlides.length > 0"
+    class="slider"
+    pager="true"
+    [options]="slideOpts"
+    #slider
+    (ionSlidesDidLoad)="slidesDidLoad1(slider)"
+  >
+    <ion-slide
+      *ngFor="let slide of mainSlides"
+      (click)="sliderClickEvent(slide.link)"
+    >
       <!-- <img [src]="slide?.image.path" /> -->
       <ion-img [src]="slide?.image.path"></ion-img>
       <!-- <div class="swiper-button-prev" (click)="prevSlide()"></div>
@@ -93,10 +101,18 @@
   <!-- Categories Container End -->
 
   <!-- Banner Start -->
-  <ion-slides pager="true" [options]="bannerOpts" class="banner"
-    #banner (ionSlidesDidLoad)="slidesDidLoad(banner)">
-    <ion-slide *ngFor="let banner of banners[0]" (click)="openLinkBanner(banner.link)"
-      [style.background]="(!banner.bg_image)? banner.bg_color : 'url('+banner.bg_image+')'">
+  <ion-slides
+    pager="true"
+    [options]="bannerOpts"
+    class="banner"
+    #banner
+    (ionSlidesDidLoad)="slidesDidLoad(banner)"
+  >
+    <ion-slide
+      *ngFor="let banner of banners[0]"
+      (click)="openLinkBanner(banner.link)"
+      [style.background]="(!banner.bg_image)? banner.bg_color : 'url('+banner.bg_image+')'"
+    >
       <div class="banner-caption">
         <h5 class="banner-title">{{banner.title}}</h5>
         <p class="banner-desc">{{banner.description}}</p>
@@ -116,23 +132,46 @@
   <h2 *ngIf="trendingProducts?.length>0" class="heading-1" translate>
     TRENDING_NOW
   </h2>
-  <ion-grid
-    *ngIf="trendingProducts?.length>0"
-    class="ion-no-padding product-row"
-  >
-    <ion-row>
-      <ion-col
-        size="3" (click)="openProduct(prod.slug)"
-        *ngFor="let prod of trendingProducts"
-        class="ion-no-padding ion-text-center"
-      >
-        <img [src]="prod?.image"/>
-        <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
-        <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
-        <p *ngIf="prod?.has_offer">{{prod.price}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div *ngIf="isAuthenticated ==true">
+    <ion-grid
+      *ngIf="trendingProducts?.length>0"
+      class="ion-no-padding product-row"
+    >
+      <ion-row>
+        <ion-col
+          size="3"
+          (click)="openProduct(prod.slug)"
+          *ngFor="let prod of trendingProducts"
+          class="ion-no-padding ion-text-center"
+        >
+          <img [src]="prod?.image" />
+          <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+          <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+          <p *ngIf="prod?.has_offer">{{prod.price}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="isAuthenticated==false">
+    <ion-grid
+      *ngIf="trendingProducts?.length>0"
+      class="ion-no-padding product-row"
+    >
+      <ion-row>
+        <ion-col
+          size="3"
+          (click)="redirect()"
+          *ngFor="let prod of trendingProducts"
+          class="ion-no-padding ion-text-center"
+        >
+          <img [src]="prod?.image" />
+          <!-- <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2> -->
+          <!-- <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+        <p *ngIf="prod?.has_offer">{{prod.price}}</p> -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
   <!-- Banner Start -->
   <ion-slides
@@ -164,21 +203,47 @@
   <h2 *ngIf="recentProducts?.length>0" class="heading-1" translate>
     RECENTLY_ADDED
   </h2>
-
-  <ion-grid *ngIf="recentProducts?.length>0" class="ion-no-padding product-row">
-    <ion-row>
-      <ion-col
-        size="3" (click)="openProduct(prod.slug)"
-        *ngFor="let prod of recentProducts"
-        class="ion-no-padding ion-text-center"
-      >
-        <img [src]="prod?.image"  />
-        <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+  <div *ngIf="isAuthenticated==true">
+    <ion-grid
+      *ngIf="recentProducts?.length>0"
+      class="ion-no-padding product-row"
+    >
+      <ion-row>
+        <ion-col
+          size="3"
+          (click)="openProduct(prod.slug)"
+          *ngFor="let prod of recentProducts"
+          class="ion-no-padding ion-text-center"
+        >
+          <img [src]="prod?.image" />
+          <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+          <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+          <p *ngIf="prod?.has_offer">{{prod.price}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="isAuthenticated==false">
+    <ion-grid
+      *ngIf="recentProducts?.length>0"
+      class="ion-no-padding product-row"
+    >
+      <ion-row>
+        <ion-col
+          size="3"
+          (click)="redirect()"
+          *ngFor="let prod of recentProducts"
+          class="ion-no-padding ion-text-center"
+        >
+          <img [src]="prod?.image" />
+          <!-- <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
         <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
-        <p *ngIf="prod?.has_offer">{{prod.price}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <p *ngIf="prod?.has_offer">{{prod.price}}</p> -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
   <!-- Row product end -->
 
   <!-- Banner Start -->
@@ -208,27 +273,47 @@
 
   <!-- Banner End -->
 
-  <h2 *ngIf="popularProducts?.length>0" class="heading-1" translate>
-    POPULAR
-  </h2>
-
-  <ion-grid
-    *ngIf="popularProducts?.length>0"
-    class="ion-no-padding product-row"
-  >
-    <ion-row>
-      <ion-col
-        size="3" (click)="openProduct(prod.slug)"
-        *ngFor="let prod of popularProducts"
-        class="ion-no-padding ion-text-center"
-      >
-        <img [src]="prod?.image"  />
-        <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
-        <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
-        <p *ngIf="prod?.has_offer">{{prod.price}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <h2 *ngIf="popularProducts?.length>0" class="heading-1" translate>POPULAR</h2>
+  <div *ngIf="isAuthenticated==true">
+    <ion-grid
+      *ngIf="popularProducts?.length>0"
+      class="ion-no-padding product-row"
+    >
+      <ion-row>
+        <ion-col
+          size="3"
+          (click)="openProduct(prod.slug)"
+          *ngFor="let prod of popularProducts"
+          class="ion-no-padding ion-text-center"
+        >
+          <img [src]="prod?.image" />
+          <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+          <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+          <p *ngIf="prod?.has_offer">{{prod.price}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="isAuthenticated==false">
+    <ion-grid
+      *ngIf="popularProducts?.length>0"
+      class="ion-no-padding product-row"
+    >
+      <ion-row>
+        <ion-col
+          size="3"
+          (click)="redirect()"
+          *ngFor="let prod of popularProducts"
+          class="ion-no-padding ion-text-center"
+        >
+          <img [src]="prod?.image" />
+          <!-- <h2 *ngIf="!prod?.has_offer">{{prod.price}}</h2>
+          <h2 *ngIf="prod?.has_offer">{{prod.offer_price}}</h2>
+          <p *ngIf="prod?.has_offer">{{prod.price}}</p> -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
   <!-- Banner Start -->
   <ion-slides
@@ -264,6 +349,7 @@
   <!-- <div *ngIf="sections[2]"> -->
 
   <!-- products containder Start -->
+<div *ngIf="isAuthenticated==true">
   <div class="products">
     <!-- product template start-->
     <div class="product" *ngFor="let prod of additionalProducts">
@@ -282,13 +368,47 @@
             class="ion-no-padding ion-text-right ion-align-self-center"
             size="3"
           >
-            <ion-icon name="cart-outline" (click)="openProduct(prod.slug)"></ion-icon>
+            <ion-icon
+              name="cart-outline"
+              (click)="openProduct(prod.slug)"
+            ></ion-icon>
           </ion-col>
         </ion-row>
       </div>
     </div>
     <!-- product template end -->
   </div>
+</div>
+<div *ngIf="isAuthenticated==false">
+  <div class="products">
+    <!-- product template start-->
+    <div class="product" *ngFor="let prod of additionalProducts">
+      <!-- <img [src]="prod?.image" (click)="openProduct(prod.slug)" /> -->
+      <ion-img [src]="prod?.image" (click)="redirect()"></ion-img>
+      <div>
+        <p (click)="redirect()">{{prod.title}}</p>
+        <ion-row>
+          <ion-col class="ion-no-padding ion-align-self-center" size="9">
+            <!-- <h3 *ngIf="!prod.has_offer">{{prod.price}}</h3>
+            <h3 *ngIf="prod.has_offer">
+              {{prod.offer_price}} <span class="offer">{{prod.price}}</span>
+            </h3> -->
+          </ion-col>
+          <ion-col
+            class="ion-no-padding ion-text-right ion-align-self-center"
+            size="3"
+          >
+            <ion-icon
+              name="cart-outline"
+              (click)="redirect()"
+            ></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    <!-- product template end -->
+  </div>
+</div>
   <!-- Products Container End -->
   <!-- </div> -->
 

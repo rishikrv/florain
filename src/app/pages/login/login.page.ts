@@ -74,6 +74,7 @@ export class LoginPage implements OnInit {
     loginType: number;
     city: string;
     pincode: number;
+    plan:string;
   };
   contactNumber: any;
   otp_value: any;
@@ -110,7 +111,8 @@ export class LoginPage implements OnInit {
       landMark: ["", Validators.required],
       businessName: ["", Validators.required],
       bType: ["", Validators.required],
-      usertype1:["",Validators.required]
+      usertype1:["",Validators.required],
+      plan:[]
       
     });
 
@@ -509,6 +511,7 @@ export class LoginPage implements OnInit {
     }
   }
   register_user() {
+    debugger;
     if (this.updateUser == 1) {
       this.userData = {
         email: this.RegForm.value.email,
@@ -521,6 +524,7 @@ export class LoginPage implements OnInit {
         city: this.RegForm.value.City,
         pincode: this.RegForm.value.pinCode,
         landMark: this.RegForm.value.landMark,
+
       };
       this.UserRegister(this.userData);
     } else {
@@ -534,6 +538,7 @@ export class LoginPage implements OnInit {
         loginType: Number(this.RegForm.value.usertype1),
         city: this.RegForm.value.City,
         pincode: this.RegForm.value.pinCode,
+        plan : "price_1J68aVJZ67mzdcSqqPtc6t4s"
       };
       console.log(this.Data)
       this.UserSeller(this.Data);

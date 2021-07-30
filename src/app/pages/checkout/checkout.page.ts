@@ -3,10 +3,16 @@ import { UtilsService } from "src/app/services/utils.service";
 import { ApiService } from "src/app/services/api.service";
 import { api_urls } from "src/environments/environment";
 import { AppDataService } from "src/app/services/app-data.service";
-import { NavController, ModalController, IonSlides, Platform } from "@ionic/angular";
+import {
+  NavController,
+  ModalController,
+  IonSlides,
+  Platform,
+} from "@ionic/angular";
 import { BehaviorSubject } from "rxjs";
 import { LoginPage } from "../login/login.page";
 
+declare var RazorpayCheckout: any;
 @Component({
   selector: "app-checkout",
   templateUrl: "./checkout.page.html",
@@ -40,6 +46,11 @@ export class CheckoutPage implements OnInit {
   progress = 0;
   currentSlide = 0;
   @ViewChild("slideWithNav", { static: false }) slideWithNav: IonSlides;
+  wallet: any;
+  WalletAmount: number;
+  gGrandTotal: number;
+  myArr: any;
+  finalAmount: number;
 
   constructor(
     public utils: UtilsService,
@@ -50,21 +61,36 @@ export class CheckoutPage implements OnInit {
     public modalController: ModalController
   ) {
     console.log(window.location.pathname);
-      // this.platform.backButton.subscribe(() => {
-      //   utils.backButtonPress(window.location.pathname);
-      // });
+    // this.platform.backButton.subscribe(() => {
+    //   utils.backButtonPress(window.location.pathname);
+    // });
   }
 
   ngOnInit() {
     this.isAuthenticated = this.appData.isAuthenticated;
     this.order = this.appData.order;
+    this.myArr = this.order.grand_total.split(" ");
     console.log(`User login status: ${this.isAuthenticated.value}`);
   }
   ionViewWillEnter() {
     if (this.isAuthenticated.value === true) {
       this.getCustomerAddresses();
+      this.loadWallet();
     } else {
       this.getGuestAddress();
+    }
+  }
+  async loadWallet() {
+    try {
+      let response = await this.api.get(api_urls.dashboard).toPromise();
+      this.wallet = response.data;
+      this.WalletAmount = (this.wallet.wallet * 25) / 100;
+      this.finalAmount = this.myArr[1] - this.WalletAmount;
+      this.utils.dismissLoading();
+    } catch (error) {
+      console.log(error);
+      this.utils.dismissLoading();
+      this.utils.presentToast(error.error.mesSsagge);
     }
   }
 
@@ -343,36 +369,93 @@ export class CheckoutPage implements OnInit {
    * Confirms place order
    */
   async placeOrder() {
-    let data = {
-      shipping_address: this.shipping_address,
-      ship_to: this.selectedAddress.id,
-      address_id: this.selectedAddress.id,
-      payment_method_id: this.selectedPayment.id,
-      shipping_option_id: this.selectedShippingOption.id,
-      packaging_id: this.selectedPackaging.id,
-      buyer_note: this.buyer_note,
-      device_id: this.appData.playerID,
-    };
+    if (this.selectedPayment.code == "razor_pay") {
+      var options = {
+        description: "Credits towards consultation",
+        image: "https://i.imgur.com/3g7nmJC.png",
+        order_id: "order_DBJOWzybf0sJbb",
+        currency: "INR",
+        key: "rzp_test_uVQ5Z3p8wY2xkf",
+        amount: this.order.id.grand_total,
+        name: "Acme Corp",
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      var successCallback = function (success) {
+        alert("payment_id: " + success.razorpay_payment_id);
+        var orderId = success.razorpay_order_id;
+        var signature = success.razorpay_signature;
+        let data = {
+          shipping_address: this.shipping_address,
+          ship_to: this.selectedAddress.id,
+          address_id: this.selectedAddress.id,
+          payment_method_id: this.selectedPayment.id,
+          shipping_option_id: this.selectedShippingOption.id,
+          packaging_id: this.selectedPackaging.id,
+          buyer_note: this.buyer_note,
+          device_id: this.appData.playerID,
+        };
 
-    console.log(`Order Data =>  ${JSON.stringify(data)}`);
+        console.log(`Order Data =>  ${JSON.stringify(data)}`);
 
-    this.utils.presentLoading("Please wait");
+        this.utils.presentLoading("Please wait");
 
-    try {
-      let res = await this.api
-        .post(api_urls.cartUpdate + this.order.id + "/checkout", data)
-        .toPromise();
-      console.log(res);
+        try {
+          let res = this.api
+            .post(api_urls.cartUpdate + this.order.id + "/checkout", data)
+            .toPromise();
+          console.log(res);
 
-      if (res.data) {
-        this.utils.presentToast("Order Placed Successfully!");
-        this.nav.navigateRoot("/");
+          if (res.data) {
+            this.utils.presentToast("Order Placed Successfully!");
+            this.nav.navigateRoot("/");
+          }
+
+          this.utils.dismissLoading();
+        } catch (error) {
+          this.utils.dismissLoading();
+          console.log(error);
+        }
+      };
+      var cancelCallback = function (error) {
+        alert(error.description + " (Error " + error.code + ")");
+      };
+      RazorpayCheckout.on("payment.success", successCallback);
+      RazorpayCheckout.on("payment.cancel", cancelCallback);
+      RazorpayCheckout.open(options, successCallback, cancelCallback);
+    } else {
+      let data = {
+        shipping_address: this.shipping_address,
+        ship_to: this.selectedAddress.id,
+        address_id: this.selectedAddress.id,
+        payment_method_id: this.selectedPayment.id,
+        shipping_option_id: this.selectedShippingOption.id,
+        packaging_id: this.selectedPackaging.id,
+        buyer_note: this.buyer_note,
+        device_id: this.appData.playerID,
+      };
+
+      console.log(`Order Data =>  ${JSON.stringify(data)}`);
+
+      this.utils.presentLoading("Please wait");
+
+      try {
+        let res = await this.api
+          .post(api_urls.cartUpdate + this.order.id + "/checkout", data)
+          .toPromise();
+        console.log(res);
+
+        if (res.data) {
+          this.utils.presentToast("Order Placed Successfully!");
+          this.nav.navigateRoot("/");
+        }
+
+        this.utils.dismissLoading();
+      } catch (error) {
+        this.utils.dismissLoading();
+        console.log(error);
       }
-
-      this.utils.dismissLoading();
-    } catch (error) {
-      this.utils.dismissLoading();
-      console.log(error);
     }
   }
 

@@ -420,7 +420,8 @@
               type="text"
               placeholder="Phone Number"
               formControlName="number"
-              value="{{contactNumber}}"
+              [(ngModel)]="contactNumber"
+              readonly
             ></ion-input>
           </ion-col>
           <ion-col size="9">
@@ -541,7 +542,7 @@
               type="text"
               placeholder="Phone Number"
               formControlName="number"
-              value="{contactNumber}"
+              [(ngModel)]="contactNumber"
             ></ion-input>
           </ion-col>
           <ion-col size="9">
